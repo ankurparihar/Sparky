@@ -5,7 +5,12 @@ namespace sparky {
 	namespace maths {
 		struct vec2 {
 
-			float x, y;
+			union {
+				struct {
+					float x, y;
+				};
+				float coords[2];
+			};
 
 			vec2() : x(0.0f), y(0.0f) {}
 			vec2(const float& k) : x(k), y(k) {}
@@ -18,6 +23,8 @@ namespace sparky {
 			vec2 operator-(const float f);
 			vec2 operator*(const float f);
 			vec2 operator/(const float f);
+
+			float& operator[](const int i) { return coords[i]; }
 
 			void operator+=(const vec2& v);
 			void operator-=(const vec2& v);
@@ -34,7 +41,12 @@ namespace sparky {
 
 		struct vec3 {
 
-			float x, y, z;
+			union {
+				struct {
+					float x, y, z;
+				};
+				float coords[3];
+			};
 
 			vec3() : x(0.0f), y(0.0f), z(0.0f) {}
 			vec3(const float& k) : x(k), y(k), z(k) {}
@@ -49,6 +61,8 @@ namespace sparky {
 			vec3 operator-(const float f);
 			vec3 operator*(const float f);
 			vec3 operator/(const float f);
+
+			float& operator[](const int i) { return coords[i]; }
 
 			void operator+=(const vec3& v);
 			void operator-=(const vec3& v);
@@ -65,7 +79,12 @@ namespace sparky {
 
 		struct vec4 {
 
-			float x, y, z, w;
+			union {
+				struct {
+					float x, y, z, w;
+				};
+				float coords[4];
+			};
 
 			vec4() : x(0.0f), y(0.0f), z(0.0f), w(0.0f) {}
 			vec4(const float& k) : x(k), y(k), z(k), w(k) {}
@@ -91,6 +110,8 @@ namespace sparky {
 			void operator-=(const float f);
 			void operator*=(const float f);
 			void operator/=(const float f);
+
+			float& operator[](const int i) { return coords[i]; }
 
 			bool operator==(const vec4& v);
 			bool operator!=(const vec4& v);

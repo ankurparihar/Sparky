@@ -7,7 +7,7 @@ static bool options[] = {
 	false,	// O_IO_MOUSE_BTN
 	false,	// O_IO_MOUSE_POS
 	false,	// O_VECTOR
-	false,	// O_MATRIX
+	true,	// O_MATRIX
 	false,	// O_WINDOW_RESIZE
 	true	// O_TRIANGLE
 };
@@ -29,10 +29,11 @@ int main() {
 	if (options[O_VECTOR] == true) {
 		// vector library test
 		vec3 vector1(1.0f, 2.0f, 3.0f);
-		vec3 vector2(0.4f, 2.1f, 3.6f);
-		vec3 vector3 = vector2 + vector1;
-		vector2 += 5;
-		std::cout << (vector3 / 2) << std::endl << (vector2 != vec3(5.4f, 7.1f, 8.5f))<< std::endl;
+		// std::cout << vector1[0] << std::endl;
+		// vec3 vector2(0.4f, 2.1f, 3.6f);
+		// vec3 vector3 = vector2 + vector1;
+		// vector2 += 5;
+		// std::cout << (vector3 / 2) << std::endl << (vector2 != vec3(5.4f, 7.1f, 8.5f))<< std::endl;
 	}
 	if (options[O_MATRIX] == true) {
 		// matrix library test
@@ -48,14 +49,22 @@ int main() {
 			 2, 15, 13, 17,
 			 2, 18, 15,  1
 		);
-		matrix1.transpose();
-		std::cout << matrix1 << std::endl;
+		// matrix1.transpose();
+		// std::cout << matrix1 << std::endl;
+		// std::cout << matrix2 << std::endl;
 		// std::cout << tan(toRadian(45)) << std::endl;
 		// matrix1 /= 10;
 		// std::cout << matrix1 << std::endl;
 		// mat4 matrix3 = matrix1 * matrix2;
 		// matrix1 *= matrix2;
-		std::cout << matrix2[5] << std::endl;
+		// matrix1[0][2] = 5;
+		// std::cout << matrix1[0] << std::endl;
+		// vec4 column = matrix1.getColumn(1);
+		// std::cout << column[1] << std::endl;
+		// matrix1[2] = matrix2[0];
+		// std::cout << matrix1 << std::endl;
+		// matrix1[2][0] = 50;
+		// std::cout << matrix2 << std::endl;
 		// matrix2[5] = 50;
 		// matrix2[5] -= 50;
 		// std::cout << mat4::mat4(matrix1) << std::endl;

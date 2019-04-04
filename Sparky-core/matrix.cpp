@@ -48,7 +48,7 @@ namespace sparky {
 		mat4 mat4::indentity() {
 			mat4 mat = mat4();
 			for (int i = 0; i < 16; i += 5) {
-				mat[i] = 1.0f;
+				mat.elements[i] = 1.0f;
 			}
 			return mat;
 		}
@@ -107,6 +107,7 @@ namespace sparky {
 			}
 			return new_mat;
 		}
+
 		vec4 mat4::operator*(const vec4& vec) const {
 			return vec4(
 				elements[4 * 0 + 0] * vec.x + elements[4 * 0 + 1] * vec.y + elements[4 * 0 + 2] * vec.z + elements[4 * 0 + 3] * vec.w,
@@ -114,6 +115,9 @@ namespace sparky {
 				elements[4 * 2 + 0] * vec.x + elements[4 * 2 + 1] * vec.y + elements[4 * 2 + 2] * vec.z + elements[4 * 2 + 3] * vec.w,
 				elements[4 * 3 + 0] * vec.x + elements[4 * 3 + 1] * vec.y + elements[4 * 3 + 2] * vec.z + elements[4 * 3 + 3] * vec.w
 			);
+		}
+		vec4 mat4::getColumn(const int col) const {
+			return columns[col];
 		}
 
 		void mat4::operator+=(const float& f) {
@@ -185,30 +189,30 @@ namespace sparky {
 
 		mat4 mat4::orthographic(float left, float right, float bottom, float top, float near, float far) {
 			mat4 mat = mat4();
-			mat[0 + 0 * 4] = 2 / (right - left);
-			mat[1 + 1 * 4] = 2 / (top - bottom);
-			mat[2 + 2 * 4] = 2 / (near - far);
-			mat[0 + 3 * 4] = (right + left) / (right - left);
-			mat[1 + 3 * 4] = (top + bottom) / (top - bottom);
-			mat[2 + 3 * 4] = (far + near) / (far - near);
-			mat[3 + 3 * 4] = 1;
+			mat.elements[0 + 0 * 4] = 2 / (right - left);
+			mat.elements[1 + 1 * 4] = 2 / (top - bottom);
+			mat.elements[2 + 2 * 4] = 2 / (near - far);
+			mat.elements[0 + 3 * 4] = (right + left) / (right - left);
+			mat.elements[1 + 3 * 4] = (top + bottom) / (top - bottom);
+			mat.elements[2 + 3 * 4] = (far + near) / (far - near);
+			mat.elements[3 + 3 * 4] = 1;
 			return mat;
 		}
 		mat4 mat4::perspective(float fov, float aspectRatio, float near, float far) {
 			mat4 mat = mat4();
 			float tan_a2 = 1 / (float)tan(toRadian(fov / 2));
-			mat[0 + 0 * 4] = tan_a2 / aspectRatio;
-			mat[1 + 1 * 4] = tan_a2;
-			mat[2 + 2 * 4] = (far + near) / (far - near);
-			mat[2 + 3 * 4] = 2 * near * far / (near - far);
-			mat[3 + 2 * 4] = 1;
+			mat.elements[0 + 0 * 4] = tan_a2 / aspectRatio;
+			mat.elements[1 + 1 * 4] = tan_a2;
+			mat.elements[2 + 2 * 4] = (far + near) / (far - near);
+			mat.elements[2 + 3 * 4] = 2 * near * far / (near - far);
+			mat.elements[3 + 2 * 4] = 1;
 			return mat;
 		}
 		mat4 mat4::translation(const vec3& translation) {
 			mat4 mat = mat4::indentity();
-			mat[0 + 3 * 4] = translation.x;
-			mat[1 + 3 * 4] = translation.y;
-			mat[2 + 3 * 4] = translation.z;
+			mat.elements[0 + 3 * 4] = translation.x;
+			mat.elements[1 + 3 * 4] = translation.y;
+			mat.elements[2 + 3 * 4] = translation.z;
 			return mat;
 		}
 		mat4 mat4::Transpose(const mat4& mat) {
@@ -239,10 +243,10 @@ namespace sparky {
 		}
 		mat4 mat4::scale(const vec3& scale) {
 			mat4 mat = mat4();
-			mat[0 + 0 * 4] = scale.x;
-			mat[1 + 1 * 4] = scale.y;
-			mat[2 + 2 * 4] = scale.z;
-			mat[3 + 3 * 4] = 1;
+			mat.elements[0 + 0 * 4] = scale.x;
+			mat.elements[1 + 1 * 4] = scale.y;
+			mat.elements[2 + 2 * 4] = scale.z;
+			mat.elements[3 + 3 * 4] = 1;
 			return mat;
 		}
 

@@ -7,7 +7,11 @@ namespace sparky {
 
 		struct mat4 {
 
-			float elements[16];
+			union
+			{
+				float elements[16];
+				vec4 columns[4];
+			};
 			
 			mat4();
 			mat4(float f);
@@ -21,7 +25,7 @@ namespace sparky {
 			);
 			static mat4 indentity();
 
-			float& operator [] (const int n) { return elements[n]; }
+			vec4& operator [] (const int n) { return columns[n]; }
 			// float& operator [] (const float& k, const float& m) { return (&k)[m]; }
 
 			mat4 operator+(const float& f) const;
@@ -34,6 +38,7 @@ namespace sparky {
 			mat4 operator*(const mat4& mat) const;
 
 			vec4 operator*(const vec4& vec) const;
+			vec4 getColumn(const int col) const;
 			
 			void operator+=(const float& f);
 			void operator-=(const float& f);
