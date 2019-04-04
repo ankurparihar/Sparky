@@ -36,6 +36,9 @@
     <ClCompile Include="vector.cpp">
       <Filter>src\maths</Filter>
     </ClCompile>
+    <ClCompile Include="matrix.cpp">
+      <Filter>src\maths</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -45,6 +48,12 @@
       <Filter>src\maths</Filter>
     </ClInclude>
     <ClInclude Include="vector.h">
+      <Filter>src\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="matrix.h">
+      <Filter>src\maths</Filter>
+    </ClInclude>
+    <ClInclude Include="common_math.h">
       <Filter>src\maths</Filter>
     </ClInclude>
   </ItemGroup>

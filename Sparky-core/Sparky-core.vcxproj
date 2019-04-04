@@ -130,11 +130,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="matrix.cpp" />
     <ClCompile Include="vector.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="common_math.h" />
     <ClInclude Include="maths.h" />
+    <ClInclude Include="matrix.h" />
     <ClInclude Include="vector.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
