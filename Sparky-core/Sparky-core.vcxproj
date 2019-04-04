@@ -138,6 +138,7 @@
     <ClInclude Include="common_math.h" />
     <ClInclude Include="maths.h" />
     <ClInclude Include="matrix.h" />
+    <ClInclude Include="options.h" />
     <ClInclude Include="vector.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

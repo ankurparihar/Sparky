@@ -77,13 +77,27 @@ namespace sparky {
 			glfwSwapBuffers(m_Window);
 		}
 
+		void Window::RegisterOptions(bool* opts) {
+			options = opts;
+		}
+
 		void window_resize(GLFWwindow* window, int width, int height){
+			Window* win = (Window*)glfwGetWindowUserPointer(window);
+			glfwGetFramebufferSize(window, &win->m_Width, &win->m_Height);
 			glViewport(0, 0, width, height);
 		}
 
 		static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 			Window* win = (Window*)glfwGetWindowUserPointer(window);
 			win->m_Keys[key] = (action != GLFW_RELEASE);
+			if (action == GLFW_RELEASE) {
+				// state change
+				if (key==GLFW_KEY_R) win->options[O_WINDOW_RESIZE] = !win->options[O_WINDOW_RESIZE];
+				if (key==GLFW_KEY_K) win->options[O_IO_KEY] = !win->options[O_IO_KEY];
+				if (key==GLFW_KEY_M) win->options[O_IO_MOUSE_BTN] = !win->options[O_IO_MOUSE_BTN];
+				if (key==GLFW_KEY_N) win->options[O_IO_MOUSE_POS] = !win->options[O_IO_MOUSE_POS];
+				if (key==GLFW_KEY_T) win->options[O_TRIANGLE] = !win->options[O_TRIANGLE];
+			}
 		}
 
 		static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {

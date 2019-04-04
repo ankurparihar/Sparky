@@ -2,6 +2,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "options.h"
 
 #define MAX_KEYS	1024
 #define MAX_BUTTONS 32
@@ -15,16 +16,19 @@ namespace sparky {
 			int m_Width, m_Height;
 			GLFWwindow* m_Window;
 			bool m_Closed;
-
 			bool m_Keys[MAX_KEYS];
 			bool m_Buttons[MAX_BUTTONS];
 			double mx, my;
 		public:
+			bool* options;
 			Window(const char *title, int width, int height);
 			~Window();
 			bool closed() const;
 			void clear() const;
 			void update();
+			void RegisterOptions(bool* opts);
+
+			friend void window_resize(GLFWwindow* window, int width, int height);
 
 			inline int getWidth() const { return m_Width; };
 			inline int getHeight() const { return m_Height; };
