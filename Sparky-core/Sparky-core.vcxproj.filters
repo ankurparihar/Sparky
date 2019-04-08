@@ -25,6 +25,12 @@
     <Filter Include="src\maths">
       <UniqueIdentifier>{427fab2c-5eb6-452c-acaf-89b7212adcaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{86be5a51-d5c3-49be-a889-380a2cba960a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\shaders">
+      <UniqueIdentifier>{7220acde-49f3-4081-a0c5-8850e489a218}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -38,6 +44,12 @@
     </ClCompile>
     <ClCompile Include="matrix.cpp">
       <Filter>src\maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="fileutils.cpp">
+      <Filter>src\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,5 +71,19 @@
     <ClInclude Include="options.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="fileutils.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\basic.frag">
+      <Filter>src\shaders</Filter>
+    </None>
+    <None Include="shaders\basic.vert">
+      <Filter>src\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

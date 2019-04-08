@@ -189,23 +189,23 @@ namespace sparky {
 
 		mat4 mat4::orthographic(float left, float right, float bottom, float top, float near, float far) {
 			mat4 mat = mat4();
-			mat.elements[0 + 0 * 4] = 2 / (right - left);
-			mat.elements[1 + 1 * 4] = 2 / (top - bottom);
-			mat.elements[2 + 2 * 4] = 2 / (near - far);
-			mat.elements[0 + 3 * 4] = (right + left) / (right - left);
-			mat.elements[1 + 3 * 4] = (top + bottom) / (top - bottom);
-			mat.elements[2 + 3 * 4] = (far + near) / (far - near);
-			mat.elements[3 + 3 * 4] = 1;
+			mat.elements[0 + 0 * 4] = 2.0f / (right - left);
+			mat.elements[1 + 1 * 4] = 2.0f / (top - bottom);
+			mat.elements[2 + 2 * 4] = 2.0f / (near - far);
+			mat.elements[3 + 0 * 4] = - (right + left) / (right - left);
+			mat.elements[3 + 1 * 4] = - (top + bottom) / (top - bottom);
+			mat.elements[3 + 2 * 4] = (far + near) / (far - near);
+			mat.elements[3 + 3 * 4] = 1.0f;
 			return mat;
 		}
 		mat4 mat4::perspective(float fov, float aspectRatio, float near, float far) {
 			mat4 mat = mat4();
-			float tan_a2 = 1 / (float)tan(toRadian(fov / 2));
+			float tan_a2 = 1.0f / (float)tan(toRadian(0.5f * fov));
 			mat.elements[0 + 0 * 4] = tan_a2 / aspectRatio;
 			mat.elements[1 + 1 * 4] = tan_a2;
-			mat.elements[2 + 2 * 4] = (far + near) / (far - near);
-			mat.elements[2 + 3 * 4] = 2 * near * far / (near - far);
-			mat.elements[3 + 2 * 4] = 1;
+			mat.elements[2 + 2 * 4] = (near + far) / (near - far);
+			mat.elements[2 + 3 * 4] = (2.0f * near * far) / (near - far);
+			mat.elements[3 + 2 * 4] = -1.0f;
 			return mat;
 		}
 		mat4 mat4::translation(const vec3& translation) {
@@ -235,10 +235,10 @@ namespace sparky {
 			float z = axis.z;
 
 			return Transpose(mat4(
-				x * x * omc + c    , x * y * omc - z * s, x * z * omc + y * s, 0,
-				x * y * omc + z * s, y * y * omc + c    , y * x * omc - x * s, 0,
-				x * z * omc - y * s, y * z * omc + x * s, z * z * omc + c    , 0,
-				0                  , 0                  , 0                  , 1
+				x * x * omc + c    , x * y * omc - z * s, x * z * omc + y * s, 0.0f,
+				x * y * omc + z * s, y * y * omc + c    , y * x * omc - x * s, 0.0f,
+				x * z * omc - y * s, y * z * omc + x * s, z * z * omc + c    , 0.0f,
+				0.0f               , 0.0f               , 0.0f               , 1.0f
 			));
 		}
 		mat4 mat4::scale(const vec3& scale) {
@@ -246,7 +246,7 @@ namespace sparky {
 			mat.elements[0 + 0 * 4] = scale.x;
 			mat.elements[1 + 1 * 4] = scale.y;
 			mat.elements[2 + 2 * 4] = scale.z;
-			mat.elements[3 + 3 * 4] = 1;
+			mat.elements[3 + 3 * 4] = 1.0f;
 			return mat;
 		}
 
