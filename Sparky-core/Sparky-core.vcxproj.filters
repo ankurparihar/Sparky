@@ -31,6 +31,9 @@
     <Filter Include="src\shaders">
       <UniqueIdentifier>{7220acde-49f3-4081-a0c5-8850e489a218}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\graphics\buffers">
+      <UniqueIdentifier>{5eafbe31-549e-42b1-ab24-d9ae09501a25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +53,15 @@
     </ClCompile>
     <ClCompile Include="fileutils.cpp">
       <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="buffer.cpp">
+      <Filter>src\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>src\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexArray.cpp">
+      <Filter>src\graphics\buffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +88,15 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="buffer.h">
+      <Filter>src\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>src\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexArray.h">
+      <Filter>src\graphics\buffers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -131,21 +131,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="buffer.cpp" />
     <ClCompile Include="fileutils.cpp" />
+    <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="vector.cpp" />
+    <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="buffer.h" />
     <ClInclude Include="common_math.h" />
     <ClInclude Include="fileutils.h" />
+    <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="maths.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="options.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="vector.h" />
+    <ClInclude Include="VertexArray.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
