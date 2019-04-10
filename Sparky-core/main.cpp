@@ -12,6 +12,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "LayerData.h"
+
 #define INACTIVE_BLOCK 0
 
 int main() {
@@ -24,6 +26,7 @@ int main() {
 	SPARKY_INFO("Hello {0}", "Sparky!");
 
 	auto app = sparky::CreateApplication();
+	app->PushLayer(new ExampleLayer());
 	app->Run();
 	delete app;
 

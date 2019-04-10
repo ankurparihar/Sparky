@@ -137,6 +137,9 @@
     <ClCompile Include="Dummy.cpp" />
     <ClCompile Include="fileutils.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
+    <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="LayerData.cpp" />
+    <ClCompile Include="LayerStack.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matrix.cpp" />
@@ -164,6 +167,9 @@
     <ClInclude Include="Events\MouseEvent.h" />
     <ClInclude Include="fileutils.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="Layer.h" />
+    <ClInclude Include="LayerData.h" />
+    <ClInclude Include="LayerStack.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="maths.h" />
     <ClInclude Include="matrix.h" />

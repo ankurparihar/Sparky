@@ -46,6 +46,9 @@
     <Filter Include="src\platform\Windows">
       <UniqueIdentifier>{3bf498aa-461c-4544-a8c0-369538f10d88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Layer">
+      <UniqueIdentifier>{d92de8a2-8855-461d-afb5-b75534176fe2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -104,6 +107,15 @@
     </ClCompile>
     <ClCompile Include="Application.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="LayerStack.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="LayerData.cpp">
+      <Filter>src\Layer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -910,6 +922,15 @@
     </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerStack.h">
+      <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerData.h">
+      <Filter>src\Layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
