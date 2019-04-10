@@ -87,8 +87,21 @@ namespace sparky {
 			glUniform4f(getUniformLocation(name), vec.x, vec.y, vec.z, vec.w);
 		}
 
+		void Shader::setUniform2f(const GLchar* name, glm::vec2& vec) {
+			glUniform2f(getUniformLocation(name), vec.x, vec.y);
+		}
+		void Shader::setUniform3f(const GLchar* name, glm::vec3& vec) {
+			glUniform3f(getUniformLocation(name), vec.x, vec.y, vec.z);
+		}
+		void Shader::setUniform4f(const GLchar* name, glm::vec4& vec) {
+			glUniform4f(getUniformLocation(name), vec.x, vec.y, vec.z, vec.w);
+		}
+
 		void Shader::setUniformMat4(const GLchar* name, const maths::mat4& mat) {
 			glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, mat.elements);
+		}
+		void Shader::setUniformMat4(const GLchar* name, const glm::mat4& mat) {
+			glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &mat[0][0]);
 		}
 
 		void Shader::enable() const {

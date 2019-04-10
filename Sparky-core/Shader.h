@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include "fileutils.h"
 #include "maths.h"
+#include "glm/glm.hpp"
 
 namespace sparky {
 	namespace graphics {
@@ -23,9 +24,13 @@ namespace sparky {
 			void setUniform2f(const GLchar* name, maths::vec2& vec);
 			void setUniform3f(const GLchar* name, maths::vec3& vec);
 			void setUniform4f(const GLchar* name, maths::vec4& vec);
-			
-			void setUniformMat4(const GLchar* name, const maths::mat4& mat);
 
+			void setUniform2f(const GLchar* name, glm::vec2& vec);
+			void setUniform3f(const GLchar* name, glm::vec3& vec);
+			void setUniform4f(const GLchar* name, glm::vec4& vec);
+
+			void setUniformMat4(const GLchar* name, const maths::mat4& mat);
+			void setUniformMat4(const GLchar* name, const glm::mat4& mat);
 			void enable() const;
 			void disable() const;
 		private:

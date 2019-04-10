@@ -1,10 +1,17 @@
 #include "window.h"
 #include "maths.h"
 #include "Shader.h"
+#include "Log.h"
+
+#include "Events/Event.h"
+#include "Events/ApplicationEvent.h"
 
 #include "buffer.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
+
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 #define INACTIVE_BLOCK 0
 
@@ -13,9 +20,21 @@ int main() {
 	using namespace graphics;
 	using namespace maths;
 
-	Window window("Sparky", 960, 540);
+	Window window("Sparky", 1280, 720);
 
 	// glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
+
+	Log::Init();
+	SPARKY_CORE_WARN("Initialized logging.");
+	SPARKY_INFO("Hello {0}", "Sparky!");
+
+	WindowResizeEvent e(1280, 720);
+	if (e.IsInCategory(EventCategoryApplication)) {
+		SPARKY_TRACE(e);
+	}
+	if (e.IsInCategory(EventCategoryInput)) {
+		SPARKY_TRACE(e);
+	}
 
 #if INACTIVE_BLOCK
 	GLfloat vertices[] = {
@@ -88,22 +107,22 @@ int main() {
 	IndexBuffer ibo(indeces, 6);
 
 	// vao.AddBuffers(vbo, 0);
-	sprite1.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
+	sprite1.AddBuffers(new Buffer(vertices,  4 * 3, 3), 0);
 	sprite1.AddBuffers(new Buffer(colors[0], 4 * 4, 4), 1);
-	sprite2.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
+	sprite2.AddBuffers(new Buffer(vertices,  4 * 3, 3), 0);
 	sprite2.AddBuffers(new Buffer(colors[1], 4 * 4, 4), 1);
-	sprite3.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
+	sprite3.AddBuffers(new Buffer(vertices,  4 * 3, 3), 0);
 	sprite3.AddBuffers(new Buffer(colors[2], 4 * 4, 4), 1);
 
 #endif
 
-	mat4 ortho = mat4::Transpose(mat4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f));
-
+	// mat4 ortho = mat4::Transpose(mat4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f));
+	glm::mat4 proj = glm::ortho(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
 	Shader shader("shaders/basic.vert", "shaders/basic.frag");
 	shader.enable();
 
-	shader.setUniformMat4("pr_matrix", ortho);
-	shader.setUniformMat4("ml_matrix", mat4::translation(vec3(4, 3, 0)));
+	shader.setUniformMat4("pr_matrix", proj);
+	// shader.setUniformMat4("ml_matrix", mat4::translation(vec3(4, 3, 0)));
 	shader.setUniform4f("colour", vec4(0.2f, 0.3f, 0.8f, 1.0f));
 	shader.setUniform2f("light_pos", vec2(4.0f, 1.5f));
 
@@ -111,7 +130,7 @@ int main() {
 		window.clear();
 		double x, y;
 		window.getMousePosition(x, y);
-		shader.setUniform2f("light_pos", vec2((float)(x * 16.0f / 960.0f), (float)(9.0f - y * 9.0f / 540.0f)));
+		shader.setUniform2f("light_pos", vec2((float)(x * 16.0f / 1280.0f), (float)(9.0f - y * 9.0f / 720.0f)));
 		#if INACTIVE_BLOCK
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		#else
