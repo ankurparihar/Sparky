@@ -1,9 +1,8 @@
-#include "window.h"
+// #include "window.h"
+#include "Application.h"
 #include "maths.h"
 #include "Shader.h"
-#include "Log.h"
 
-#include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 
 #include "buffer.h"
@@ -20,13 +19,18 @@ int main() {
 	using namespace graphics;
 	using namespace maths;
 
+	Log::Init();
+	SPARKY_CORE_WARN("Initialized logging.");
+	SPARKY_INFO("Hello {0}", "Sparky!");
+
+	auto app = sparky::CreateApplication();
+	app->Run();
+	delete app;
+
 	Window window("Sparky", 1280, 720);
 
 	// glClearColor(0.2f, 0.3f, 0.8f, 1.0f);
 
-	Log::Init();
-	SPARKY_CORE_WARN("Initialized logging.");
-	SPARKY_INFO("Hello {0}", "Sparky!");
 
 	WindowResizeEvent e(1280, 720);
 	if (e.IsInCategory(EventCategoryApplication)) {

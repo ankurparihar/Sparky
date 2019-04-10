@@ -40,6 +40,12 @@
     <Filter Include="src\Log">
       <UniqueIdentifier>{93c3c27d-7457-4185-b994-786fa1b52332}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\platform">
+      <UniqueIdentifier>{19b8f8ab-8f43-4825-b9d2-9df15e4b5dc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\Windows">
+      <UniqueIdentifier>{3bf498aa-461c-4544-a8c0-369538f10d88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -88,6 +94,15 @@
       <Filter>src\Log</Filter>
     </ClCompile>
     <ClCompile Include="Dummy.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="sppch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\windows\WindowsWindow.cpp">
+      <Filter>src\platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -885,6 +900,15 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="Dummy.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="sppch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\windows\WindowsWindow.h">
+      <Filter>src\platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

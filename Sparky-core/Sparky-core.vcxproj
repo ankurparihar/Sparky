@@ -139,7 +139,10 @@
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matrix.cpp" />
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="platform\windows\WindowsWindow.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="sppch.cpp" />
     <ClCompile Include="vector.cpp" />
     <ClCompile Include="vendor\glm\detail\glm.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
@@ -164,7 +167,10 @@
     <ClInclude Include="maths.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="options.h" />
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="platform\windows\WindowsWindow.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="sppch.h" />
     <ClInclude Include="vector.h" />
     <ClInclude Include="vendor\glm\common.hpp" />
     <ClInclude Include="vendor\glm\detail\compute_common.hpp" />

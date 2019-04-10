@@ -1,7 +1,8 @@
 #pragma once
-#include <iostream>
+#include "sppch.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "Events/Event.h"
 
 #define MAX_KEYS	1024
 #define MAX_BUTTONS 32
@@ -41,4 +42,40 @@ namespace sparky {
 			friend static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos);
 		};
 	}
+
+	struct WindowProps
+	{
+		std::string Title;
+		unsigned int Width;
+		unsigned int Height;
+
+		WindowProps(const std::string& title = "Sparky Engine",
+			unsigned int width = 1280,
+			unsigned int height = 720)
+			: Title(title), Width(width), Height(height)
+		{
+		}
+	};
+
+	// Interface representing a desktop system based Window
+	class Sparky_Window
+	{
+	public:
+		using EventCallbackFn = std::function<void(Event&)>;
+
+		virtual ~Sparky_Window() {}
+
+		virtual void OnUpdate() = 0;
+
+		virtual unsigned int GetWidth() const = 0;
+		virtual unsigned int GetHeight() const = 0;
+
+		// Window attributes
+		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
+		virtual void SetVSync(bool enabled) = 0;
+		virtual bool IsVSync() const = 0;
+
+		static Sparky_Window* Create(const WindowProps& props = WindowProps());
+	};
+
 }
