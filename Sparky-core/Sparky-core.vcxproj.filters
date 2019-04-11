@@ -117,6 +117,9 @@
     <ClCompile Include="LayerData.cpp">
       <Filter>src\Layer</Filter>
     </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
