@@ -49,6 +49,9 @@
     <Filter Include="src\Layer">
       <UniqueIdentifier>{d92de8a2-8855-461d-afb5-b75534176fe2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\imgui">
+      <UniqueIdentifier>{68344531-03a5-4807-8f5a-d2ef0082c3e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,21 +81,6 @@
     <ClCompile Include="VertexArray.cpp">
       <Filter>src\graphics\buffers</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\glm\detail\glm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_demo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_impl_glfw_gl3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>src\Log</Filter>
     </ClCompile>
@@ -117,8 +105,23 @@
     <ClCompile Include="LayerData.cpp">
       <Filter>src\Layer</Filter>
     </ClCompile>
+    <ClCompile Include="vendor\imgui\imgui.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\imgui_demo.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\imgui_draw.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\imgui_impl_glfw_gl3.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
     <ClCompile Include="glad.c">
-      <Filter>Source Files</Filter>
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\glm\detail\glm.cpp">
+      <Filter>src\maths</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,9 +139,6 @@
     </ClInclude>
     <ClInclude Include="common_math.h">
       <Filter>src\maths</Filter>
-    </ClInclude>
-    <ClInclude Include="options.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="fileutils.h">
       <Filter>src\utils</Filter>
@@ -934,6 +934,9 @@
     </ClInclude>
     <ClInclude Include="LayerData.h">
       <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="options.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
