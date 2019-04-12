@@ -156,10 +156,6 @@
     <ClCompile Include="sppch.cpp" />
     <ClCompile Include="vector.cpp" />
     <ClCompile Include="vendor\glm\detail\glm.cpp" />
-    <ClCompile Include="vendor\imgui\imgui.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>

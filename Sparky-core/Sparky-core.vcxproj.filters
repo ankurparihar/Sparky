@@ -105,18 +105,6 @@
     <ClCompile Include="LayerData.cpp">
       <Filter>src\Layer</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui.cpp">
-      <Filter>src\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_demo.cpp">
-      <Filter>src\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_draw.cpp">
-      <Filter>src\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_impl_glfw_gl3.cpp">
-      <Filter>src\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>src</Filter>
     </ClCompile>
