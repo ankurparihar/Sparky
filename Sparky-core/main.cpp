@@ -12,7 +12,8 @@
 // #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "LayerData.h"
+#include "ExampleLayer.h"
+#include "ImGuiLayer.h"
 
 #define INACTIVE_BLOCK 0
 
@@ -27,6 +28,7 @@ int main() {
 
 	auto app = sparky::CreateApplication();
 	app->PushLayer(new ExampleLayer());
+	app->PushLayer(new ImGuiLayer());
 	app->Run();
 	delete app;
 

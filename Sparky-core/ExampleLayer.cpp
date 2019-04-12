@@ -1,4 +1,4 @@
-#include "LayerData.h"
+#include "ExampleLayer.h"
 
 ExampleLayer::ExampleLayer()
 	: Layer("Example")

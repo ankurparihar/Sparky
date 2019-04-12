@@ -52,6 +52,9 @@
     <Filter Include="src\imgui">
       <UniqueIdentifier>{68344531-03a5-4807-8f5a-d2ef0082c3e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\platform\OpenGL">
+      <UniqueIdentifier>{fc983ea0-53ef-4a7f-a41c-96dbda94fd64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -102,14 +105,32 @@
     <ClCompile Include="LayerStack.cpp">
       <Filter>src\Layer</Filter>
     </ClCompile>
-    <ClCompile Include="LayerData.cpp">
-      <Filter>src\Layer</Filter>
-    </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\glm\detail\glm.cpp">
       <Filter>src\maths</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\imgui.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\imgui_demo.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\imgui_draw.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\imgui_widgets.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiLayer.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\OpenGL\imgui_impl_opengl3.cpp">
+      <Filter>src\platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="ExampleLayer.cpp">
+      <Filter>src\Layer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -869,9 +890,6 @@
     <ClInclude Include="vendor\imgui\imgui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imgui_impl_glfw_gl3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="vendor\imgui\imgui_internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -920,11 +938,29 @@
     <ClInclude Include="LayerStack.h">
       <Filter>src\Layer</Filter>
     </ClInclude>
-    <ClInclude Include="LayerData.h">
-      <Filter>src\Layer</Filter>
-    </ClInclude>
     <ClInclude Include="options.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\imstb_rectpack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\imstb_textedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\imstb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiLayer.h">
+      <Filter>src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\OpenGL\imgui_impl_opengl3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\imgui_impl_glfw_gl3.h">
+      <Filter>src\platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="ExampleLayer.h">
+      <Filter>src\Layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

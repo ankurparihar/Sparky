@@ -6,8 +6,13 @@ namespace sparky {
 
 	#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+	Application* Application::s_Instance = nullptr;
+
 	Application::Application()
 	{
+		SPARKY_CORE_ASSERT(!s_Instance, "Application already exists!");
+		s_Instance = this;
+
 		m_Window = std::unique_ptr<Sparky_Window>(Sparky_Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 	}
@@ -19,11 +24,13 @@ namespace sparky {
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* overlay)
 	{
 		m_LayerStack.PushOverlay(overlay);
+		overlay->OnAttach();
 	}
 
 	void Application::OnEvent(Event& e)
@@ -31,8 +38,8 @@ namespace sparky {
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
-		// SPARKY_CORE_TRACE("{0}", e);
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
+		{
 			(*--it)->OnEvent(e);
 			if (e.Handled)
 				break;

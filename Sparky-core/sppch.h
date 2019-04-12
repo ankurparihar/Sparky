@@ -13,3 +13,5 @@
 #include <unordered_set>
 
 #include "Log.h"
+
+#include <Windows.h>
