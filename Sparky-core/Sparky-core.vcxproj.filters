@@ -132,6 +132,12 @@
     <ClCompile Include="ExampleLayer.cpp">
       <Filter>src\Layer</Filter>
     </ClCompile>
+    <ClCompile Include="platform\windows\WindowsInput.cpp">
+      <Filter>src\platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -961,6 +967,18 @@
     </ClInclude>
     <ClInclude Include="ExampleLayer.h">
       <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\windows\WindowsInput.h">
+      <Filter>src\platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyCodes.h">
+      <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseButtonCodes.h">
+      <Filter>src\input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

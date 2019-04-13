@@ -145,6 +145,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="ImGuiLayer.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="ExampleLayer.cpp" />
     <ClCompile Include="LayerStack.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
     <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="window.cpp" />
+    <ClCompile Include="platform\windows\WindowsInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buffer.h" />
@@ -177,12 +179,15 @@
     <ClInclude Include="fileutils.h" />
     <ClInclude Include="ImGuiLayer.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="KeyCodes.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="ExampleLayer.h" />
     <ClInclude Include="LayerStack.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="maths.h" />
     <ClInclude Include="matrix.h" />
+    <ClInclude Include="MouseButtonCodes.h" />
     <ClInclude Include="options.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="platform\OpenGL\imgui_impl_opengl3.h" />
@@ -442,6 +447,7 @@
     <ClInclude Include="vendor\imgui\stb_truetype.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="window.h" />
+    <ClInclude Include="platform\windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.frag" />

@@ -4,6 +4,8 @@
 #include <string>
 #include <functional>
 
+#include "Input.h"
+
 namespace sparky {
 
 	// Events in Sparky are currently blocking, meaning when an event occurs it
