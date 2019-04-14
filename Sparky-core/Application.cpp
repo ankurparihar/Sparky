@@ -25,6 +25,16 @@ namespace sparky {
 
 		m_Window = std::unique_ptr<Sparky_Window>(Sparky_Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+
+		// OpenGL specification
+		int nrAttributes;
+		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+		SPARKY_INFO("Maximum no of vertex attributes supported: {0}", nrAttributes);
+		
+		// Default settings
+		DemoIndex = 1;
+		WireFrameMode = false;
+
 	}
 
 	Application::~Application()
@@ -77,20 +87,15 @@ namespace sparky {
 		using namespace graphics;
 		using namespace maths;
 
-		int DemoIndex = 3;
-		int InterDemoIndex = DemoIndex;
-		bool WireFrameMode = true;
-
 		while (m_Running)
 		{
-			// wireframe mode
-			if (WireFrameMode) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
+			int InterDemoIndex;
+			
 			switch (DemoIndex)
 			{
 			case 1:
 			{
+				// =================================== Simple Window ==================================== //
 				InterDemoIndex = DemoIndex;
 				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Hello window");
 
@@ -108,6 +113,7 @@ namespace sparky {
 			break;
 			case 2:
 			{
+				// =================================== Simple Triangle ==================================== //
 				InterDemoIndex = DemoIndex;
 				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Hello Triangle");
 
@@ -134,7 +140,7 @@ namespace sparky {
 				glBindVertexArray(0);
 
 				// 2. use our shader program when we want to render an object
-				Shader shader("shaders/hello-triangle.vert", "shaders/hello-triangle.frag");
+				Shader shader("shaders/Getting-started/hello-triangle.vert", "shaders/Getting-started/hello-triangle.frag");
 				shader.enable();
 
 				while (m_Running && DemoIndex == InterDemoIndex) {
@@ -157,6 +163,10 @@ namespace sparky {
 			break;
 			case 3:
 			{
+				// =================================== Simple Rectangle ==================================== //
+				/*
+				* Using 4 vertices we draw a rectangel by drawing traingles two times
+				*/
 				InterDemoIndex = DemoIndex;
 				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Hello Rectangle");
 
@@ -175,7 +185,7 @@ namespace sparky {
 				VertexArray vao;
 				vao.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
 				IndexBuffer ibo(indeces, 6);
-				Shader shader("shaders/hello-triangle.vert", "shaders/hello-triangle.frag");
+				Shader shader("shaders/Getting-started/hello-triangle.vert", "shaders/Getting-started/hello-triangle.frag");
 				shader.enable();
 
 				while (m_Running && DemoIndex == InterDemoIndex) {
@@ -198,6 +208,7 @@ namespace sparky {
 			break;
 			case 4:
 			{
+				// =================================== 2D ligth effect ==================================== //
 				InterDemoIndex = DemoIndex;
 
 				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Simple 2D light effect");
@@ -254,7 +265,7 @@ namespace sparky {
 				
 				// mat4 ortho = mat4::Transpose(mat4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f));
 				glm::mat4 proj = glm::ortho(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
-				Shader shader("shaders/basic.vert", "shaders/basic.frag");
+				Shader shader("shaders/Lightening/basic.vert", "shaders/Lightening/basic.frag");
 				shader.enable();
 
 				shader.setUniformMat4("pr_matrix", proj);
@@ -315,4 +326,23 @@ namespace sparky {
 		return true;
 	}
 
+	void Application::next_demo() {
+		glClearColor(0, 0, 0, 1);
+		DemoIndex++;
+	}
+	void Application::prev_demo() {
+		glClearColor(0, 0, 0, 1);
+		DemoIndex--;
+	}
+	void Application::flip_wireframe_mode() {
+		// Flip wireframe mode
+		WireFrameMode = !WireFrameMode;
+		if (WireFrameMode) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+	void Application::swap_demo(int i)
+	{
+		glClearColor(0, 0, 0, 1);
+		DemoIndex = i;
+	}
 }

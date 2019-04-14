@@ -55,6 +55,12 @@
     <Filter Include="src\platform\OpenGL">
       <UniqueIdentifier>{fc983ea0-53ef-4a7f-a41c-96dbda94fd64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\shaders\Getting-started">
+      <UniqueIdentifier>{43869b9b-eec9-492a-8832-7b315fca46d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\shaders\Lightening">
+      <UniqueIdentifier>{4ddae01b-a8e0-4c57-a3be-5b510795a007}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -982,12 +988,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\basic.frag">
-      <Filter>src\shaders</Filter>
-    </None>
-    <None Include="shaders\basic.vert">
-      <Filter>src\shaders</Filter>
-    </None>
     <None Include="vendor\glm\detail\func_common.inl">
       <Filter>Header Files</Filter>
     </None>
@@ -1381,11 +1381,17 @@
     <None Include="vendor\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="shaders\hello-triangle.frag">
-      <Filter>src\shaders</Filter>
+    <None Include="shaders\Lightening\basic.frag">
+      <Filter>src\shaders\Lightening</Filter>
     </None>
-    <None Include="shaders\hello-triangle.vert">
-      <Filter>src\shaders</Filter>
+    <None Include="shaders\Lightening\basic.vert">
+      <Filter>src\shaders\Lightening</Filter>
+    </None>
+    <None Include="shaders\Getting-started\hello-triangle.frag">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\hello-triangle.vert">
+      <Filter>src\shaders\Getting-started</Filter>
     </None>
   </ItemGroup>
 </Project>

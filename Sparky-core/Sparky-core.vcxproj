@@ -450,10 +450,10 @@
     <ClInclude Include="platform\windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\hello-triangle.frag" />
-    <None Include="shaders\hello-triangle.vert" />
-    <None Include="shaders\basic.frag" />
-    <None Include="shaders\basic.vert" />
+    <None Include="shaders\Getting-started\hello-triangle.frag" />
+    <None Include="shaders\Getting-started\hello-triangle.vert" />
+    <None Include="shaders\Lightening\basic.frag" />
+    <None Include="shaders\Lightening\basic.vert" />
     <None Include="vendor\glm\detail\func_common.inl" />
     <None Include="vendor\glm\detail\func_common_simd.inl" />
     <None Include="vendor\glm\detail\func_exponential.inl" />

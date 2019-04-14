@@ -23,14 +23,23 @@ namespace sparky {
 		inline Sparky_Window& GetWindow() { return *m_Window; }
 
 		inline static Application& Get() { return *s_Instance; }
+		inline void quitApplication() { m_Running = false; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Sparky_Window> m_Window;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-	private:
+	public:
 		static Application* s_Instance;
+	private:
+		int DemoIndex;
+		bool WireFrameMode;
+	public:
+		void next_demo();
+		void prev_demo();
+		void flip_wireframe_mode();
+		void swap_demo(int i);
 	};
 
 	// To be defined in CLIENT
