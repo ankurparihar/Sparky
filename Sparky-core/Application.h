@@ -12,6 +12,8 @@ namespace sparky {
 		virtual ~Application();
 
 		void Run();
+		void clear() const;
+		void update();
 
 		void OnEvent(Event& e);
 

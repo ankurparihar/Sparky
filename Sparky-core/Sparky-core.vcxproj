@@ -450,6 +450,8 @@
     <ClInclude Include="platform\windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\hello-triangle.frag" />
+    <None Include="shaders\hello-triangle.vert" />
     <None Include="shaders\basic.frag" />
     <None Include="shaders\basic.vert" />
     <None Include="vendor\glm\detail\func_common.inl" />

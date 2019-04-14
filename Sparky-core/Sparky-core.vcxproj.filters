@@ -1381,5 +1381,11 @@
     <None Include="vendor\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="shaders\hello-triangle.frag">
+      <Filter>src\shaders</Filter>
+    </None>
+    <None Include="shaders\hello-triangle.vert">
+      <Filter>src\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
