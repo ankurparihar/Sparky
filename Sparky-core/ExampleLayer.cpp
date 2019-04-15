@@ -31,7 +31,7 @@ void ExampleLayer::OnEvent(sparky::Event& event)
 		{
 			SPARKY_TRACE("'N' key is pressed (event)!");
 			SPARKY_INFO("Showing next demo");
-			// sparky::Application::s_Instance->next_demo();
+			sparky::Application::s_Instance->next_demo();
 			
 		}
 		break;
@@ -39,7 +39,7 @@ void ExampleLayer::OnEvent(sparky::Event& event)
 		{
 			SPARKY_TRACE("'P' key is pressed (event)!");
 			SPARKY_INFO("Showing prev demo");
-			// sparky::Application::s_Instance->prev_demo();
+			sparky::Application::s_Instance->prev_demo();
 		}
 		break;
 		default:

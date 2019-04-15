@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
+#include "Texture.h"
 
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -207,6 +208,225 @@ namespace sparky {
 			}
 			break;
 			case 4:
+			{
+				// =================================== Time varying colors ==================================== //
+				/*
+				* Using uniform variable we can change color
+				*/
+				InterDemoIndex = DemoIndex;
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Time varying colors");
+
+				GLfloat vertices[] = {
+					-0.5f, -0.5f, 0.0f, // bottom-left
+					 0.5f, -0.5f, 0.0f, // bottom-right
+					 0.0f,  0.5f, 0.0f, // top-right
+
+				};
+				GLushort indeces[] = {
+					0, 1, 2
+				};
+
+				VertexArray vao;
+				vao.AddBuffers(new Buffer(vertices, 3 * 3, 3), 0);
+				IndexBuffer ibo(indeces, 3);
+				Shader shader("shaders/Getting-started/hello-triangle.vert", "shaders/Getting-started/time_triangle.frag");
+				shader.enable();
+				float ourColor;
+				vao.bind();
+				ibo.bind();
+				while (m_Running && DemoIndex == InterDemoIndex) {
+					clear();
+
+					ourColor = (float)abs(sin(2.0f * glfwGetTime()));
+					shader.setUniform4f("ourColor", vec4(0.0f, ourColor, 0.0f, 1.0f));
+
+					// vao.bind();
+					// ibo.bind();
+					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+					// vao.unbind();
+					// ibo.unbind();
+
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+
+					m_Window->OnUpdate();
+				}
+				vao.unbind();
+				ibo.unbind();
+
+				shader.disable();
+			}
+			break;
+			case 5:
+			{
+				// =================================== Space varying colors ==================================== //
+				/*
+				* Using uniform variable we can change color
+				*/
+				InterDemoIndex = DemoIndex;
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Spatial colors");
+				
+				GLfloat vertices[] = {
+					// positions
+					 0.5f, -0.5f, 0.0f,  // bottom right
+					-0.5f, -0.5f, 0.0f,  // bottom left
+					 0.0f,  0.5f, 0.0f,  // top 
+				};
+				GLfloat colors[] = {
+					// colors
+					1.0f, 0.0f, 0.0f,
+					0.0f, 1.0f, 0.0f,
+					0.0f, 0.0f, 1.0f
+				};
+				GLushort indices[] = { 0, 1, 2 };
+				VertexArray vao;
+				vao.AddBuffers(new Buffer(vertices, 3 * 3, 3), 0);
+				vao.AddBuffers(new Buffer(colors, 3 * 3, 3), 1);
+				IndexBuffer ibo(indices, 3);
+				Shader shader("shaders/Getting-started/space_color.vert", "shaders/Getting-started/space_color.frag");
+				shader.enable();
+				vao.bind();
+				ibo.bind();
+				while (m_Running && DemoIndex == InterDemoIndex) {
+					clear();
+					glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+
+					m_Window->OnUpdate();
+				}
+				vao.unbind();
+				ibo.unbind();
+			}
+			break;
+			case 6:
+			{
+				// =================================== Textures: Solo ==================================== //
+				/*
+				* Load and sample textures from image
+				*/
+				InterDemoIndex = DemoIndex;
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Texture sampling: Solo textures");
+
+				GLfloat vertices[] = {
+					 // positions
+					 0.5f,  0.5f, 0.0f,    // top right
+					 0.5f, -0.5f, 0.0f,    // bottom right
+					-0.5f, -0.5f, 0.0f,    // bottom left
+					-0.5f,  0.5f, 0.0f,    // top left
+				};
+				GLfloat colors[] = {
+					// colors        
+					1.0f, 0.0f, 0.0f,
+					0.0f, 1.0f, 0.0f,
+					0.0f, 0.0f, 1.0f,
+					1.0f, 1.0f, 0.0f,
+				};
+				GLfloat texcoords[] = {
+					// texture coordinates
+					1.0f, 1.0f,
+					1.0f, 0.0f,
+					0.0f, 0.0f,
+					0.0f, 1.0f
+				};
+				GLushort indices[] = {
+					0, 1, 3,
+					1, 2, 3
+				};
+				VertexArray vao;
+				vao.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
+				vao.AddBuffers(new Buffer(colors, 4 * 3, 3), 1);
+				vao.AddBuffers(new Buffer(texcoords, 4 * 2, 2), 2);
+				
+				IndexBuffer ibo(indices, 6);
+				Shader shader("shaders/Getting-started/simple_texture.vert", "shaders/Getting-started/simple_texture.frag");
+				Texture texture("res/Textures/wall.jpg");
+				shader.enable();
+				vao.bind();
+				ibo.bind();
+				texture.bind();
+				while (m_Running && DemoIndex == InterDemoIndex) {
+					clear();
+					glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+
+					m_Window->OnUpdate();
+				}
+				texture.unbind();
+				vao.unbind();
+				ibo.unbind();
+				shader.disable();
+			}
+			break;
+			case 7:
+			{
+				// =================================== Textures: Mixed ==================================== //
+				/*
+				* Load and sample multiple textures from image with colors
+				*/
+				InterDemoIndex = DemoIndex;
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Texture sampling: Mixed textures");
+
+				GLfloat vertices[] = {
+					// positions
+					 0.5f,  0.5f, 0.0f,    // top right
+					 0.5f, -0.5f, 0.0f,    // bottom right
+					-0.5f, -0.5f, 0.0f,    // bottom left
+					-0.5f,  0.5f, 0.0f,    // top left
+				};
+				GLfloat colors[] = {
+					// colors        
+					1.0f, 0.0f, 0.0f,
+					0.0f, 1.0f, 0.0f,
+					0.0f, 0.0f, 1.0f,
+					1.0f, 1.0f, 0.0f,
+				};
+				GLfloat texcoords[] = {
+					// texture coordinates
+					2.0f, 2.0f,
+					2.0f, 0.0f,
+					0.0f, 0.0f,
+					0.0f, 2.0f
+				};
+				GLushort indices[] = {
+					0, 1, 3,
+					1, 2, 3
+				};
+				VertexArray vao;
+				vao.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
+				vao.AddBuffers(new Buffer(colors, 4 * 3, 3), 1);
+				vao.AddBuffers(new Buffer(texcoords, 4 * 2, 2), 2);
+
+				IndexBuffer ibo(indices, 6);
+				Shader shader("shaders/Getting-started/Mixed_tex.vert", "shaders/Getting-started/Mixed_tex.frag");
+				Texture texture2("res/Textures/wall.jpg");
+				Texture texture1("res/Textures/awesomeface.png");
+				shader.enable();
+				vao.bind();
+				ibo.bind();
+				shader.setUniform1i("texture1", 0);
+				shader.setUniform1i("texture2", 1);
+				texture1.bind(0);
+				texture2.bind(1);
+				glfwSetWindowSize(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), 600, 600);
+				while (m_Running && DemoIndex == InterDemoIndex) {
+					clear();
+					glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+
+					m_Window->OnUpdate();
+				}
+				texture2.unbind();
+				texture1.unbind();
+				vao.unbind();
+				ibo.unbind();
+				shader.disable();
+				glfwSetWindowSize(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), 1280, 720);
+			}
+			break;
+			case 8:
 			{
 				// =================================== 2D ligth effect ==================================== //
 				InterDemoIndex = DemoIndex;

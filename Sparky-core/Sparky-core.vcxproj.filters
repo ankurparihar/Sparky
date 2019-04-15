@@ -61,6 +61,21 @@
     <Filter Include="src\shaders\Lightening">
       <UniqueIdentifier>{4ddae01b-a8e0-4c57-a3be-5b510795a007}</UniqueIdentifier>
     </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{8cc65fdc-d027-416a-b880-d1fbeefc9ee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\Textures">
+      <UniqueIdentifier>{59af1ab9-97b7-46e7-9491-c1b54ab2c815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics\Textures">
+      <UniqueIdentifier>{c17ef060-b561-4ffe-9f3b-6941e8c27c25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics\Shader">
+      <UniqueIdentifier>{da88aafe-6755-42f7-95ea-efcca84cde95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics\Textures\stb_image">
+      <UniqueIdentifier>{6b6f60f3-a63e-4246-aec4-3f39e1ab468c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="matrix.cpp">
       <Filter>src\maths</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>src\graphics</Filter>
     </ClCompile>
     <ClCompile Include="fileutils.cpp">
       <Filter>src\utils</Filter>
@@ -144,6 +156,15 @@
     <ClCompile Include="Input.cpp">
       <Filter>src\input</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>src\graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>src\graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -163,9 +184,6 @@
     </ClInclude>
     <ClInclude Include="fileutils.h">
       <Filter>src\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>src\graphics</Filter>
     </ClInclude>
     <ClInclude Include="buffer.h">
       <Filter>src\graphics\buffers</Filter>
@@ -986,6 +1004,18 @@
     <ClInclude Include="MouseButtonCodes.h">
       <Filter>src\input</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>src\graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>src\graphics\Textures\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>src\graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\glm\detail\func_common.inl">
@@ -1391,6 +1421,27 @@
       <Filter>src\shaders\Getting-started</Filter>
     </None>
     <None Include="shaders\Getting-started\hello-triangle.vert">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\time_triangle.frag">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\space_color.vert">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\space_color.frag">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\simple_texture.frag">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\simple_texture.vert">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\Mixed_tex.frag">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\Mixed_tex.vert">
       <Filter>src\shaders\Getting-started</Filter>
     </None>
   </ItemGroup>

@@ -32,7 +32,6 @@ namespace sparky {
 		LayerStack m_LayerStack;
 	public:
 		static Application* s_Instance;
-	private:
 		int DemoIndex;
 		bool WireFrameMode;
 	public:

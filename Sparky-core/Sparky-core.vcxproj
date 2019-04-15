@@ -155,8 +155,10 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="platform\OpenGL\imgui_impl_opengl3.cpp" />
     <ClCompile Include="platform\windows\WindowsWindow.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="sppch.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="vector.cpp" />
     <ClCompile Include="vendor\glm\detail\glm.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
@@ -192,8 +194,10 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="platform\OpenGL\imgui_impl_opengl3.h" />
     <ClInclude Include="platform\windows\WindowsWindow.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="sppch.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="vector.h" />
     <ClInclude Include="vendor\glm\common.hpp" />
     <ClInclude Include="vendor\glm\detail\compute_common.hpp" />
@@ -445,6 +449,7 @@
     <ClInclude Include="vendor\imgui\stb_rect_pack.h" />
     <ClInclude Include="vendor\imgui\stb_textedit.h" />
     <ClInclude Include="vendor\imgui\stb_truetype.h" />
+    <ClInclude Include="vendor\stb_image\stb_image.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="window.h" />
     <ClInclude Include="platform\windows\WindowsInput.h" />
@@ -452,8 +457,15 @@
   <ItemGroup>
     <None Include="shaders\Getting-started\hello-triangle.frag" />
     <None Include="shaders\Getting-started\hello-triangle.vert" />
+    <None Include="shaders\Getting-started\Mixed_tex.frag" />
+    <None Include="shaders\Getting-started\Mixed_tex.vert" />
     <None Include="shaders\Lightening\basic.frag" />
     <None Include="shaders\Lightening\basic.vert" />
+    <None Include="shaders\Getting-started\time_triangle.frag" />
+    <None Include="shaders\Getting-started\space_color.frag" />
+    <None Include="shaders\Getting-started\space_color.vert" />
+    <None Include="shaders\Getting-started\simple_texture.frag" />
+    <None Include="shaders\Getting-started\simple_texture.vert" />
     <None Include="vendor\glm\detail\func_common.inl" />
     <None Include="vendor\glm\detail\func_common_simd.inl" />
     <None Include="vendor\glm\detail\func_exponential.inl" />
