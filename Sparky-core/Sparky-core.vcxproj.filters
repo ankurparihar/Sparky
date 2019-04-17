@@ -165,6 +165,9 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -1016,6 +1019,9 @@
     <ClInclude Include="Renderer.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\glm\detail\func_common.inl">
@@ -1442,6 +1448,18 @@
       <Filter>src\shaders\Getting-started</Filter>
     </None>
     <None Include="shaders\Getting-started\Mixed_tex.vert">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\transform.vert">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\transform.frag">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\Going-3D.frag">
+      <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Getting-started\Going-3D.vert">
       <Filter>src\shaders\Getting-started</Filter>
     </None>
   </ItemGroup>

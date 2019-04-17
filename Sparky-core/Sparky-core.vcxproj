@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="buffer.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Dummy.cpp" />
     <ClCompile Include="fileutils.cpp" />
     <ClCompile Include="glad.c" />
@@ -171,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buffer.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="common_math.h" />
     <ClInclude Include="Events\ApplicationEvent.h" />
     <ClInclude Include="Core.h" />
@@ -455,10 +457,14 @@
     <ClInclude Include="platform\windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\Getting-started\Going-3D.frag" />
+    <None Include="shaders\Getting-started\Going-3D.vert" />
     <None Include="shaders\Getting-started\hello-triangle.frag" />
     <None Include="shaders\Getting-started\hello-triangle.vert" />
     <None Include="shaders\Getting-started\Mixed_tex.frag" />
     <None Include="shaders\Getting-started\Mixed_tex.vert" />
+    <None Include="shaders\Getting-started\transform.frag" />
+    <None Include="shaders\Getting-started\transform.vert" />
     <None Include="shaders\Lightening\basic.frag" />
     <None Include="shaders\Lightening\basic.vert" />
     <None Include="shaders\Getting-started\time_triangle.frag" />

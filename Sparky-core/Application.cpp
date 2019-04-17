@@ -6,8 +6,6 @@
 #include "VertexArray.h"
 #include "Texture.h"
 
-#include "glm/gtc/matrix_transform.hpp"
-
 #include "ExampleLayer.h"
 #include "ImGuiLayer.h"
 
@@ -35,7 +33,17 @@ namespace sparky {
 		// Default settings
 		DemoIndex = 1;
 		WireFrameMode = false;
+		z_bufffer = true;
+		glEnable(GL_DEPTH_TEST);
+		// glfwSetInputMode(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		glfwGetWindowSize(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), &scr_width, &scr_height);
 
+		// Have a camera
+		camera = new Camera();
+		camera->window = static_cast<GLFWwindow*>(m_Window->GetNativeWindow());
+		mouseLookAround = false;
+		time = -100.0f;
+		mouseClicksL = 0;
 	}
 
 	Application::~Application()
@@ -409,7 +417,7 @@ namespace sparky {
 				shader.setUniform1i("texture2", 1);
 				texture1.bind(0);
 				texture2.bind(1);
-				glfwSetWindowSize(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), 600, 600);
+				glfwSetWindowSize(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), 720, 720);
 				while (m_Running && DemoIndex == InterDemoIndex) {
 					clear();
 					glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
@@ -423,10 +431,479 @@ namespace sparky {
 				vao.unbind();
 				ibo.unbind();
 				shader.disable();
-				glfwSetWindowSize(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), 1280, 720);
+				glfwSetWindowSize(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), scr_width, scr_height);
 			}
 			break;
 			case 8:
+			{
+				// =================================== Transformation ==================================== //
+				/*
+				* Use glm library to create and apply vectors and matrices
+				*/
+				InterDemoIndex = DemoIndex;
+				case_8_order = true;
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Transforms");
+
+				GLfloat vertices[] = {
+					// positions
+					 0.5f,  0.5f, 0.0f,    // top right
+					 0.5f, -0.5f, 0.0f,    // bottom right
+					-0.5f, -0.5f, 0.0f,    // bottom left
+					-0.5f,  0.5f, 0.0f,    // top left
+				};
+				GLfloat colors[] = {
+					// colors        
+					1.0f, 0.0f, 0.0f,
+					0.0f, 1.0f, 0.0f,
+					0.0f, 0.0f, 1.0f,
+					1.0f, 1.0f, 0.0f,
+				};
+				GLfloat texcoords[] = {
+					// texture coordinates
+					2.0f, 2.0f,
+					2.0f, 0.0f,
+					0.0f, 0.0f,
+					0.0f, 2.0f
+				};
+				GLushort indices[] = {
+					0, 1, 3,
+					1, 2, 3
+				};
+
+				glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+				// glm::mat4 trans = glm::mat4(1.0f);
+				// trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
+				// trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+				// trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+				
+				VertexArray vao;
+				vao.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
+				vao.AddBuffers(new Buffer(colors, 4 * 3, 3), 1);
+				vao.AddBuffers(new Buffer(texcoords, 4 * 2, 2), 2);
+
+				IndexBuffer ibo(indices, 6);
+				Shader shader("shaders/Getting-started/transform.vert", "shaders/Getting-started/transform.frag");
+				Texture texture1("res/Textures/awesomeface.png");
+				Texture texture2("res/Textures/wall.jpg");
+				shader.enable();
+				vao.bind();
+				ibo.bind();
+				shader.setUniform1i("texture1", 0);
+				shader.setUniform1i("texture2", 1);
+				texture1.bind(0);
+				texture2.bind(1);
+				glfwSetWindowSize(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), 720, 720);
+				while (m_Running && DemoIndex == InterDemoIndex) {
+					clear();
+
+					glm::mat4 trans = glm::mat4(1.0f);
+					if (case_8_order) {
+						trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+						trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+					}
+					else {
+						trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+						trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+					}
+					shader.setUniformMat4("transform", trans);
+
+					glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+
+					m_Window->OnUpdate();
+				}
+				texture2.unbind();
+				texture1.unbind();
+				vao.unbind();
+				ibo.unbind();
+				shader.disable();
+				glfwSetWindowSize(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), scr_width, scr_height);
+			}
+			break;
+			case 9:
+			{
+				// =================================== Going 3D ==================================== //
+				/*
+				* Using model view projection for 3D projections
+				*/
+				InterDemoIndex = DemoIndex;
+				case_9_multi = false;
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Going 3D");
+
+				// GLfloat vertices[] = {
+				// 	// positions
+				// 	 0.5f,  0.5f, 0.0f,    // top right
+				// 	 0.5f, -0.5f, 0.0f,    // bottom right
+				// 	-0.5f, -0.5f, 0.0f,    // bottom left
+				// 	-0.5f,  0.5f, 0.0f,    // top left
+				// };
+				GLfloat vertices[] = {
+
+					-0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					-0.5f,  0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+
+					-0.5f, -0.5f,  0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+					-0.5f, -0.5f,  0.5f,
+
+					-0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+					-0.5f, -0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+
+					-0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f, -0.5f,  0.5f,
+					-0.5f, -0.5f,  0.5f,
+					-0.5f, -0.5f, -0.5f,
+
+					-0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f, -0.5f
+				};
+				GLfloat texcoords[] = {
+					// texture coordinates
+					0.0f, 0.0f,
+					1.0f, 0.0f,
+					1.0f, 1.0f,
+					1.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 0.0f,
+
+					0.0f, 0.0f,
+					1.0f, 0.0f,
+					1.0f, 1.0f,
+					1.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 0.0f,
+
+					1.0f, 0.0f,
+					1.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 0.0f,
+					1.0f, 0.0f,
+
+					1.0f, 0.0f,
+					1.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 0.0f,
+					1.0f, 0.0f,
+
+					0.0f, 1.0f,
+					1.0f, 1.0f,
+					1.0f, 0.0f,
+					1.0f, 0.0f,
+					0.0f, 0.0f,
+					0.0f, 1.0f,
+
+					0.0f, 1.0f,
+					1.0f, 1.0f,
+					1.0f, 0.0f,
+					1.0f, 0.0f,
+					0.0f, 0.0f,
+					0.0f, 1.0f
+				};
+				GLushort indices[] = {
+					 0,  1,  2,
+					 3,  4,  5,
+					 6,  7,  8,
+					 9, 10, 11,
+					12, 13, 14,
+					15, 16, 17,
+					18, 19, 20,
+					21, 22, 23,
+					24, 25, 26,
+					27, 28, 29,
+					30, 31, 32,
+					33, 34, 35
+				};
+
+				glm::vec3 cubePositions[] = {
+					glm::vec3(0.0f,  0.0f,  0.0f),
+					glm::vec3(2.0f,  5.0f, -15.0f),
+					glm::vec3(-1.5f, -2.2f, -2.5f),
+					glm::vec3(-3.8f, -2.0f, -12.3f),
+					glm::vec3(2.4f, -0.4f, -3.5f),
+					glm::vec3(-1.7f,  3.0f, -7.5f),
+					glm::vec3(1.3f, -2.0f, -2.5f),
+					glm::vec3(1.5f,  2.0f, -2.5f),
+					glm::vec3(1.5f,  0.2f, -1.5f),
+					glm::vec3(-1.3f,  1.0f, -1.5f)
+				};
+
+				VertexArray vao;
+				vao.AddBuffers(new Buffer(vertices, 36 * 3, 3), 0);
+				vao.AddBuffers(new Buffer(texcoords, 36 * 2, 2), 1);
+
+				IndexBuffer ibo(indices, 36);
+
+				Shader shader("shaders/Getting-started/Going-3D.vert", "shaders/Getting-started/Going-3D.frag");
+				Texture texture1("res/Textures/awesomeface.png");
+				Texture texture2("res/Textures/wall.jpg");
+
+				shader.enable();
+				vao.bind();
+				ibo.bind();
+				shader.setUniform1i("texture1", 0);
+				shader.setUniform1i("texture2", 1);
+				texture1.bind(0);
+				texture2.bind(1);
+
+				// glm::mat4 model = glm::mat4(1.0f);
+				// model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+				glm::mat4 view = glm::mat4(1.0f);
+				view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+				glm::mat4 proj = glm::mat4(1.0f);
+				proj = glm::perspective(glm::radians(45.0f), (float)scr_width / (float)scr_height, 0.1f, 100.0f);
+
+				shader.setUniformMat4("view", view);
+				shader.setUniformMat4("proj", proj);
+
+				while (m_Running && DemoIndex == InterDemoIndex) {
+					clear();
+
+					if (case_9_multi) {
+						for (unsigned int i = 0; i < 10; ++i) {
+							glm::mat4 model = glm::mat4(1.0f);
+							model = glm::translate(model, cubePositions[i]);
+							float angle = 2.0f * (i + 1);
+							// float angle = (i % 3 == 0) ? (2.0f * (i + 1)) : 45.0f;
+							model = glm::rotate(model, (float)glfwGetTime() * glm::radians(angle), cubePositions[i]);
+							shader.setUniformMat4("model", model);
+							glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);
+						}
+					}
+					else {
+						glm::mat4 model = glm::mat4(1.0f);
+						model = glm::rotate(model, (float)glfwGetTime() * glm::radians(45.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+						shader.setUniformMat4("model", model);
+						glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);
+					}
+
+
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+
+					m_Window->OnUpdate();
+				}
+
+				texture2.unbind();
+				texture1.unbind();
+				ibo.unbind();
+				vao.unbind();
+				shader.disable();
+			}
+			break;
+			case 10:
+			{
+				// =================================== Camera and Movement ==================================== //
+				/*
+				* Using model view projection for 3D projections
+				*/
+				InterDemoIndex = DemoIndex;
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Camera and Movement");
+
+				GLfloat vertices[] = {
+
+					-0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					-0.5f,  0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+
+					-0.5f, -0.5f,  0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+					-0.5f, -0.5f,  0.5f,
+
+					-0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+					-0.5f, -0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+
+					-0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f, -0.5f,  0.5f,
+					-0.5f, -0.5f,  0.5f,
+					-0.5f, -0.5f, -0.5f,
+
+					-0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f, -0.5f
+				};
+				GLfloat texcoords[] = {
+					// texture coordinates
+					0.0f, 0.0f,
+					1.0f, 0.0f,
+					1.0f, 1.0f,
+					1.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 0.0f,
+
+					0.0f, 0.0f,
+					1.0f, 0.0f,
+					1.0f, 1.0f,
+					1.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 0.0f,
+
+					1.0f, 0.0f,
+					1.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 0.0f,
+					1.0f, 0.0f,
+
+					1.0f, 0.0f,
+					1.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 1.0f,
+					0.0f, 0.0f,
+					1.0f, 0.0f,
+
+					0.0f, 1.0f,
+					1.0f, 1.0f,
+					1.0f, 0.0f,
+					1.0f, 0.0f,
+					0.0f, 0.0f,
+					0.0f, 1.0f,
+
+					0.0f, 1.0f,
+					1.0f, 1.0f,
+					1.0f, 0.0f,
+					1.0f, 0.0f,
+					0.0f, 0.0f,
+					0.0f, 1.0f
+				};
+				GLushort indices[] = {
+					 0,  1,  2,
+					 3,  4,  5,
+					 6,  7,  8,
+					 9, 10, 11,
+					12, 13, 14,
+					15, 16, 17,
+					18, 19, 20,
+					21, 22, 23,
+					24, 25, 26,
+					27, 28, 29,
+					30, 31, 32,
+					33, 34, 35
+				};
+
+				glm::vec3 cubePositions[] = {
+					glm::vec3( 0.0f,  0.0f,  0.0f),
+					glm::vec3( 2.0f,  5.0f, -15.0f),
+					glm::vec3(-1.5f, -2.2f, -2.5f),
+					glm::vec3(-3.8f, -2.0f, -12.3f),
+					glm::vec3( 2.4f, -0.4f, -3.5f),
+					glm::vec3(-1.7f,  3.0f, -7.5f),
+					glm::vec3( 1.3f, -2.0f, -2.5f),
+					glm::vec3( 1.5f,  2.0f, -2.5f),
+					glm::vec3( 1.5f,  0.2f, -1.5f),
+					glm::vec3(-1.3f,  1.0f, -1.5f)
+				};
+
+				VertexArray vao;
+				vao.AddBuffers(new Buffer(vertices, 36 * 3, 3), 0);
+				vao.AddBuffers(new Buffer(texcoords, 36 * 2, 2), 1);
+
+				IndexBuffer ibo(indices, 36);
+
+				Shader shader("shaders/Getting-started/Going-3D.vert", "shaders/Getting-started/Going-3D.frag");
+				Texture texture1("res/Textures/awesomeface.png");
+				Texture texture2("res/Textures/wall.jpg");
+
+				shader.enable();
+				vao.bind();
+				ibo.bind();
+				shader.setUniform1i("texture1", 0);
+				shader.setUniform1i("texture2", 1);
+				texture1.bind(0);
+				texture2.bind(1);
+
+				// glm::mat4 model = glm::mat4(1.0f);
+				// model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+				// glm::mat4 view = glm::mat4(1.0f);
+				// view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+				glm::mat4 proj = glm::mat4(1.0f);
+				proj = glm::perspective(glm::radians(45.0f), (float)scr_width / (float)scr_height, 0.1f, 100.0f);
+
+				shader.setUniformMat4("proj", proj);
+
+				while (m_Running && DemoIndex == InterDemoIndex) {
+					clear();
+					
+					// Just one line lol !!!
+					shader.setUniformMat4("view", camera->view);
+
+					for (unsigned int i = 0; i < 10; ++i) {
+						glm::mat4 model = glm::mat4(1.0f);
+						model = glm::translate(model, cubePositions[i]);
+						float angle = 20.0f * i;
+						// float angle = (i % 3 == 0) ? (2.0f * (i + 1)) : 45.0f;
+						model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+						shader.setUniformMat4("model", model);
+						glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);
+					}
+
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+
+					m_Window->OnUpdate();
+				}
+
+				texture2.unbind();
+				texture1.unbind();
+				ibo.unbind();
+				vao.unbind();
+				shader.disable();
+			}
+			break;
+			case 11:
 			{
 				// =================================== 2D ligth effect ==================================== //
 				InterDemoIndex = DemoIndex;
@@ -548,10 +1025,12 @@ namespace sparky {
 
 	void Application::next_demo() {
 		glClearColor(0, 0, 0, 1);
+		camera->resetCamera();
 		DemoIndex++;
 	}
 	void Application::prev_demo() {
 		glClearColor(0, 0, 0, 1);
+		camera->resetCamera();
 		DemoIndex--;
 	}
 	void Application::flip_wireframe_mode() {
@@ -560,9 +1039,17 @@ namespace sparky {
 		if (WireFrameMode) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
+	void Application::flip_z_buffer() {
+		// enable/disable z-buffer
+		z_bufffer = !z_bufffer;
+		if (z_bufffer) glEnable(GL_DEPTH_TEST);
+		else glDisable(GL_DEPTH_TEST);
+	}
 	void Application::swap_demo(int i)
 	{
 		glClearColor(0, 0, 0, 1);
+		camera->resetCamera();
 		DemoIndex = i;
 	}
+
 }

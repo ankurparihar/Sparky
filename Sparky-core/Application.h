@@ -3,8 +3,14 @@
 #include "window.h"
 #include "LayerStack.h"
 
+// #include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+#include "Camera.h"
+
 namespace sparky {
 
+	// Application class
 	class Application
 	{
 	public:
@@ -32,13 +38,24 @@ namespace sparky {
 		LayerStack m_LayerStack;
 	public:
 		static Application* s_Instance;
+		Camera* camera;
 		int DemoIndex;
 		bool WireFrameMode;
+		bool z_bufffer;
+		int scr_width, scr_height;
+		bool mouseLookAround;
+		int mouseClicksL, mouseClicksR;
+		float time;
 	public:
 		void next_demo();
 		void prev_demo();
 		void flip_wireframe_mode();
+		void flip_z_buffer();
 		void swap_demo(int i);
+	public:
+		// case specific variables
+		bool case_8_order;
+		bool case_9_multi;
 	};
 
 	// To be defined in CLIENT
