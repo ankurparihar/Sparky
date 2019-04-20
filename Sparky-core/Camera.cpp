@@ -53,6 +53,12 @@ namespace sparky {
 		yaw += yawDiff * sense_look;
 		// yaw = (yaw > 75.0f) ? 75.0f : yaw;
 		// yaw = (yaw < -75.0f) ? -75.0f : yaw;
+		if (yaw <= -180.0f) {
+			yaw += 360.0f;
+		}
+		else if (yaw >= 180.0f) {
+			yaw -= 360.0f;
+		}
 		pitch += pitchDiff * sense_look;
 		pitch = (pitch > 75.0f) ? 75.0f : pitch;
 		pitch = (pitch < -75.0f) ? -75.0f : pitch;

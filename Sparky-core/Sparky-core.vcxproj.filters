@@ -58,9 +58,6 @@
     <Filter Include="src\shaders\Getting-started">
       <UniqueIdentifier>{43869b9b-eec9-492a-8832-7b315fca46d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\shaders\Lightening">
-      <UniqueIdentifier>{4ddae01b-a8e0-4c57-a3be-5b510795a007}</UniqueIdentifier>
-    </Filter>
     <Filter Include="res">
       <UniqueIdentifier>{8cc65fdc-d027-416a-b880-d1fbeefc9ee5}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,9 @@
     </Filter>
     <Filter Include="src\graphics\Textures\stb_image">
       <UniqueIdentifier>{6b6f60f3-a63e-4246-aec4-3f39e1ab468c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\shaders\Lighting">
+      <UniqueIdentifier>{4ddae01b-a8e0-4c57-a3be-5b510795a007}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1417,12 +1417,6 @@
     <None Include="vendor\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="shaders\Lightening\basic.frag">
-      <Filter>src\shaders\Lightening</Filter>
-    </None>
-    <None Include="shaders\Lightening\basic.vert">
-      <Filter>src\shaders\Lightening</Filter>
-    </None>
     <None Include="shaders\Getting-started\hello-triangle.frag">
       <Filter>src\shaders\Getting-started</Filter>
     </None>
@@ -1461,6 +1455,24 @@
     </None>
     <None Include="shaders\Getting-started\Going-3D.vert">
       <Filter>src\shaders\Getting-started</Filter>
+    </None>
+    <None Include="shaders\Lighting\basic.frag">
+      <Filter>src\shaders\Lighting</Filter>
+    </None>
+    <None Include="shaders\Lighting\basic.vert">
+      <Filter>src\shaders\Lighting</Filter>
+    </None>
+    <None Include="shaders\Lighting\1.Colors.frag">
+      <Filter>src\shaders\Lighting</Filter>
+    </None>
+    <None Include="shaders\Lighting\1.Colors.vert">
+      <Filter>src\shaders\Lighting</Filter>
+    </None>
+    <None Include="shaders\Lighting\1.Light.vert">
+      <Filter>src\shaders\Lighting</Filter>
+    </None>
+    <None Include="shaders\Lighting\1.Light.frag">
+      <Filter>src\shaders\Lighting</Filter>
     </None>
   </ItemGroup>
 </Project>

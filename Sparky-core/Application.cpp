@@ -31,7 +31,7 @@ namespace sparky {
 		SPARKY_INFO("Maximum no of vertex attributes supported: {0}", nrAttributes);
 		
 		// Default settings
-		DemoIndex = 1;
+		DemoIndex = 11;
 		WireFrameMode = false;
 		z_bufffer = true;
 		glEnable(GL_DEPTH_TEST);
@@ -267,7 +267,7 @@ namespace sparky {
 			break;
 			case 5:
 			{
-				// =================================== Space varying colors ==================================== //
+				// =================================== Space varying colors =================================== //
 				/*
 				* Using uniform variable we can change color
 				*/
@@ -905,6 +905,95 @@ namespace sparky {
 			break;
 			case 11:
 			{
+				// =================================== Colors ==================================== //
+				InterDemoIndex = DemoIndex;
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Colors");
+
+				// case_11_r = case_11_g = case_11_b = case_11_a = 1.0f;
+				color_r = color_g = color_b = color_a = 1.0f;
+				glm::vec3 lightPos = glm::vec3(1.0f, 1.0f, 1.0f);
+				glm::vec4 lightColor = glm::vec4(color_r, color_g, color_b, color_a);
+				glm::vec4 objectColor = glm::vec4(1.0f, 0.5f, 0.31f, 1.0f);
+
+				GLfloat vertices[] = {
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f, -0.5f, -0.5f,
+					-0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f, -0.5f,
+					-0.5f, -0.5f,  0.5f,
+					-0.5f, -0.5f, -0.5f,
+				};
+				
+				GLushort indices[] = {
+					0, 1, 2,
+					1, 2, 3,
+					4, 5, 6,
+					5, 6, 7,
+					0, 1, 5,
+					0, 4, 5,
+					2, 3, 7,
+					2, 6, 7,
+					2, 0, 4,
+					2, 6, 4,
+					1, 3, 7,
+					1, 5, 7
+				};
+
+				VertexArray cubeVAO;
+				IndexBuffer ibo(indices, 36);
+				cubeVAO.AddBuffers(new Buffer(vertices, 8 * 3, 3), 0);
+
+				Shader shaderColor("shaders/Lighting/1.Colors.vert", "shaders/Lighting/1.Colors.frag");
+				Shader shaderLight("shaders/Lighting/1.Light.vert", "shaders/Lighting/1.Light.frag");
+				
+				glm::mat4 proj = glm::mat4(1.0f);
+				proj = glm::perspective(glm::radians(45.0f), (float)scr_width / (float)scr_height, 0.1f, 100.0f);
+				glm::mat4 model;
+				
+				cubeVAO.bind();
+				ibo.bind();
+
+				while (m_Running && DemoIndex == InterDemoIndex) {
+					clear();
+
+					model = glm::mat4(1.0f);
+					lightColor = glm::vec4(color_r, color_g, color_b, color_a);
+
+					shaderColor.enable();
+					shaderColor.setUniform4f("lightColor", lightColor);
+					shaderColor.setUniform4f("objectColor", objectColor);
+					shaderColor.setUniformMat4("model", model);
+					shaderColor.setUniformMat4("view", camera->view);
+					shaderColor.setUniformMat4("proj", proj);
+					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, lightPos);
+					model = glm::scale(model, glm::vec3(0.2f));
+					
+					shaderLight.enable();
+					shaderLight.setUniform4f("lightColor", lightColor);
+					shaderLight.setUniformMat4("model", model);
+					shaderLight.setUniformMat4("view", camera->view);
+					shaderLight.setUniformMat4("proj", proj);
+					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+					// shaderLight.disable();
+
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+
+					m_Window->OnUpdate();
+				}
+
+				ibo.unbind();
+				cubeVAO.unbind();
+				shaderLight.disable();
+			}
+			break;
+			case 12:
+			{
 				// =================================== 2D ligth effect ==================================== //
 				InterDemoIndex = DemoIndex;
 
@@ -962,7 +1051,7 @@ namespace sparky {
 				
 				// mat4 ortho = mat4::Transpose(mat4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f));
 				glm::mat4 proj = glm::ortho(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
-				Shader shader("shaders/Lightening/basic.vert", "shaders/Lightening/basic.frag");
+				Shader shader("shaders/Lighting/basic.vert", "shaders/Lighting/basic.frag");
 				shader.enable();
 
 				shader.setUniformMat4("pr_matrix", proj);

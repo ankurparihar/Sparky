@@ -46,6 +46,7 @@ namespace sparky {
 		bool mouseLookAround;
 		int mouseClicksL, mouseClicksR;
 		float time;
+		float color_r, color_g, color_b, color_a;
 	public:
 		void next_demo();
 		void prev_demo();
@@ -56,6 +57,7 @@ namespace sparky {
 		// case specific variables
 		bool case_8_order;
 		bool case_9_multi;
+		float case_11_r, case_11_g, case_11_b, case_11_a;
 	};
 
 	// To be defined in CLIENT
