@@ -31,7 +31,7 @@ namespace sparky {
 		SPARKY_INFO("Maximum no of vertex attributes supported: {0}", nrAttributes);
 		
 		// Default settings
-		DemoIndex = 11;
+		DemoIndex = 13;
 		WireFrameMode = false;
 		z_bufffer = true;
 		glEnable(GL_DEPTH_TEST);
@@ -905,6 +905,113 @@ namespace sparky {
 			break;
 			case 11:
 			{
+				// =================================== 2D ligth effect ==================================== //
+				InterDemoIndex = DemoIndex;
+
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Simple 2D light effect");
+				// Window window("Sparky", 1280, 720);
+
+				GLfloat vertices[] = {
+					0, 0, 0,
+					0, 3, 0,
+					8, 3, 0,
+					8, 0, 0
+				};
+
+				GLushort indeces[] = {
+					0, 1, 2,
+					2, 3, 0
+				};
+
+				GLfloat colors[][16] = {
+					{
+						// Red
+						0.8f, 0.2f, 0.3f, 1.0f,
+						0.8f, 0.2f, 0.3f, 1.0f,
+						0.8f, 0.2f, 0.3f, 1.0f,
+						0.8f, 0.2f, 0.3f, 1.0f,
+					},
+					{
+						// Green
+						0.3f, 0.8f, 0.2f, 1.0f,
+						0.3f, 0.8f, 0.2f, 1.0f,
+						0.3f, 0.8f, 0.2f, 1.0f,
+						0.3f, 0.8f, 0.2f, 1.0f,
+					},
+					{
+						// Blue
+						0.2f, 0.3f, 0.8f, 1.0f,
+						0.2f, 0.3f, 0.8f, 1.0f,
+						0.2f, 0.3f, 0.8f, 1.0f,
+						0.2f, 0.3f, 0.8f, 1.0f
+					}
+				};
+
+				// VertexArray vao;
+				VertexArray sprite1, sprite2, sprite3;
+				Buffer *vbo = new Buffer(vertices, 4 * 3, 3);
+				IndexBuffer ibo(indeces, 6);
+
+				// vao.AddBuffers(vbo, 0);
+				sprite1.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
+				sprite1.AddBuffers(new Buffer(colors[0], 4 * 4, 4), 1);
+				sprite2.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
+				sprite2.AddBuffers(new Buffer(colors[1], 4 * 4, 4), 1);
+				sprite3.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
+				sprite3.AddBuffers(new Buffer(colors[2], 4 * 4, 4), 1);
+
+				// mat4 ortho = mat4::Transpose(mat4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f));
+				glm::mat4 proj = glm::ortho(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
+				Shader shader("shaders/Lighting/basic.vert", "shaders/Lighting/basic.frag");
+				shader.enable();
+
+				shader.setUniformMat4("pr_matrix", proj);
+				// shader.setUniformMat4("ml_matrix", mat4::translation(vec3(4, 3, 0)));
+				shader.setUniform4f("colour", vec4(0.2f, 0.3f, 0.8f, 1.0f));
+				shader.setUniform2f("light_pos", vec2(4.0f, 1.5f));
+				auto window = static_cast<GLFWwindow*>(s_Instance->Get().GetWindow().GetNativeWindow());
+
+				double x, y;
+
+				while (m_Running && DemoIndex == InterDemoIndex) {
+
+					clear();
+
+					glfwGetCursorPos(window, &x, &y);
+
+					shader.setUniform2f("light_pos", vec2((float)(x * 16.0f / 1280.0f), (float)(9.0f - y * 9.0f / 720.0f)));
+
+					sprite1.bind();
+					ibo.bind();
+					shader.setUniformMat4("ml_matrix", mat4::translation(vec3(0, 0, 0)));
+					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+					ibo.unbind();
+					sprite1.unbind();
+
+					sprite2.bind();
+					ibo.bind();
+					shader.setUniformMat4("ml_matrix", mat4::translation(vec3(4, 3, 0)));
+					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+					ibo.unbind();
+					sprite2.unbind();
+
+					sprite3.bind();
+					ibo.bind();
+					shader.setUniformMat4("ml_matrix", mat4::translation(vec3(8, 6, 0)));
+					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+					ibo.unbind();
+					sprite3.unbind();
+
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+
+					m_Window->OnUpdate();
+				}
+				shader.disable();
+			}
+			break;
+			case 12:
+			{
 				// =================================== Colors ==================================== //
 				InterDemoIndex = DemoIndex;
 				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Colors");
@@ -992,111 +1099,93 @@ namespace sparky {
 				shaderLight.disable();
 			}
 			break;
-			case 12:
+			case 13:
 			{
-				// =================================== 2D ligth effect ==================================== //
+				// =================================== Colors ==================================== //
 				InterDemoIndex = DemoIndex;
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Colors");
 
-				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Simple 2D light effect");
-				// Window window("Sparky", 1280, 720);
+				// case_11_r = case_11_g = case_11_b = case_11_a = 1.0f;
+				color_r = color_g = color_b = color_a = 1.0f;
+				glm::vec3 lightPos = glm::vec3(1.0f, 1.0f, 1.0f);
+				glm::vec4 lightColor = glm::vec4(color_r, color_g, color_b, color_a);
+				glm::vec4 objectColor = glm::vec4(1.0f, 0.5f, 0.31f, 1.0f);
 
 				GLfloat vertices[] = {
-					0, 0, 0,
-					0, 3, 0,
-					8, 3, 0,
-					8, 0, 0
+					0.5f,  0.5f,  0.5f,
+					0.5f,  0.5f, -0.5f,
+					0.5f, -0.5f,  0.5f,
+					0.5f, -0.5f, -0.5f,
+					-0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f, -0.5f,
+					-0.5f, -0.5f,  0.5f,
+					-0.5f, -0.5f, -0.5f,
 				};
 
-				GLushort indeces[] = {
+				GLushort indices[] = {
 					0, 1, 2,
-					2, 3, 0
+					1, 2, 3,
+					4, 5, 6,
+					5, 6, 7,
+					0, 1, 5,
+					0, 4, 5,
+					2, 3, 7,
+					2, 6, 7,
+					2, 0, 4,
+					2, 6, 4,
+					1, 3, 7,
+					1, 5, 7
 				};
 
-				GLfloat colors[][16] = {
-					{
-						// Red
-						0.8f, 0.2f, 0.3f, 1.0f,
-						0.8f, 0.2f, 0.3f, 1.0f,
-						0.8f, 0.2f, 0.3f, 1.0f,
-						0.8f, 0.2f, 0.3f, 1.0f,
-					},
-					{
-						// Green
-						0.3f, 0.8f, 0.2f, 1.0f,
-						0.3f, 0.8f, 0.2f, 1.0f,
-						0.3f, 0.8f, 0.2f, 1.0f,
-						0.3f, 0.8f, 0.2f, 1.0f,
-					},
-					{
-						// Blue
-						0.2f, 0.3f, 0.8f, 1.0f,
-						0.2f, 0.3f, 0.8f, 1.0f,
-						0.2f, 0.3f, 0.8f, 1.0f,
-						0.2f, 0.3f, 0.8f, 1.0f
-					}
-				};
+				VertexArray cubeVAO;
+				IndexBuffer ibo(indices, 36);
+				cubeVAO.AddBuffers(new Buffer(vertices, 8 * 3, 3), 0);
 
-				// VertexArray vao;
-				VertexArray sprite1, sprite2, sprite3;
-				Buffer *vbo = new Buffer(vertices, 4 * 3, 3);
-				IndexBuffer ibo(indeces, 6);
+				Shader shaderColor("shaders/Lighting/2.Colors.vert", "shaders/Lighting/2.Colors.frag");
+				Shader shaderLight("shaders/Lighting/2.Light.vert", "shaders/Lighting/2.Light.frag");
 
-				// vao.AddBuffers(vbo, 0);
-				sprite1.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
-				sprite1.AddBuffers(new Buffer(colors[0], 4 * 4, 4), 1);
-				sprite2.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
-				sprite2.AddBuffers(new Buffer(colors[1], 4 * 4, 4), 1);
-				sprite3.AddBuffers(new Buffer(vertices, 4 * 3, 3), 0);
-				sprite3.AddBuffers(new Buffer(colors[2], 4 * 4, 4), 1);
-				
-				// mat4 ortho = mat4::Transpose(mat4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f));
-				glm::mat4 proj = glm::ortho(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
-				Shader shader("shaders/Lighting/basic.vert", "shaders/Lighting/basic.frag");
-				shader.enable();
+				glm::mat4 proj = glm::mat4(1.0f);
+				proj = glm::perspective(glm::radians(45.0f), (float)scr_width / (float)scr_height, 0.1f, 100.0f);
+				glm::mat4 model;
 
-				shader.setUniformMat4("pr_matrix", proj);
-				// shader.setUniformMat4("ml_matrix", mat4::translation(vec3(4, 3, 0)));
-				shader.setUniform4f("colour", vec4(0.2f, 0.3f, 0.8f, 1.0f));
-				shader.setUniform2f("light_pos", vec2(4.0f, 1.5f));
-				auto window = static_cast<GLFWwindow*>(s_Instance->Get().GetWindow().GetNativeWindow());
-				
-				double x, y;
+				cubeVAO.bind();
+				ibo.bind();
 
-				while (m_Running && DemoIndex==InterDemoIndex) {
-					
+				while (m_Running && DemoIndex == InterDemoIndex) {
 					clear();
-					
-					glfwGetCursorPos(window, &x, &y);
 
-					shader.setUniform2f("light_pos", vec2((float)(x * 16.0f / 1280.0f), (float)(9.0f - y * 9.0f / 720.0f)));
+					model = glm::mat4(1.0f);
+					lightColor = glm::vec4(color_r, color_g, color_b, color_a);
 
-					sprite1.bind();
-					ibo.bind();
-					shader.setUniformMat4("ml_matrix", mat4::translation(vec3(0, 0, 0)));
+					shaderColor.enable();
+					shaderColor.setUniform4f("lightColor", lightColor);
+					shaderColor.setUniform4f("objectColor", objectColor);
+					shaderColor.setUniformMat4("model", model);
+					shaderColor.setUniformMat4("view", camera->view);
+					shaderColor.setUniformMat4("proj", proj);
 					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
-					ibo.unbind();
-					sprite1.unbind();
 
-					sprite2.bind();
-					ibo.bind();
-					shader.setUniformMat4("ml_matrix", mat4::translation(vec3(4, 3, 0)));
-					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
-					ibo.unbind();
-					sprite2.unbind();
+					model = glm::mat4(1.0f);
+					model = glm::translate(model, lightPos);
+					model = glm::scale(model, glm::vec3(0.2f));
 
-					sprite3.bind();
-					ibo.bind();
-					shader.setUniformMat4("ml_matrix", mat4::translation(vec3(8, 6, 0)));
+					shaderLight.enable();
+					shaderLight.setUniform4f("lightColor", lightColor);
+					shaderLight.setUniformMat4("model", model);
+					shaderLight.setUniformMat4("view", camera->view);
+					shaderLight.setUniformMat4("proj", proj);
 					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
-					ibo.unbind();
-					sprite3.unbind();
+					// shaderLight.disable();
 
 					for (Layer* layer : m_LayerStack)
 						layer->OnUpdate();
 
 					m_Window->OnUpdate();
 				}
-				shader.disable();
+
+				ibo.unbind();
+				cubeVAO.unbind();
+				shaderLight.disable();
 			}
 			break;
 			default:

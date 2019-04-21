@@ -1474,5 +1474,17 @@
     <None Include="shaders\Lighting\1.Light.frag">
       <Filter>src\shaders\Lighting</Filter>
     </None>
+    <None Include="shaders\Lighting\2.Light.frag">
+      <Filter>src\shaders\Lighting</Filter>
+    </None>
+    <None Include="shaders\Lighting\2.Light.vert">
+      <Filter>src\shaders\Lighting</Filter>
+    </None>
+    <None Include="shaders\Lighting\2.Colors.frag">
+      <Filter>src\shaders\Lighting</Filter>
+    </None>
+    <None Include="shaders\Lighting\2.Colors.vert">
+      <Filter>src\shaders\Lighting</Filter>
+    </None>
   </ItemGroup>
 </Project>

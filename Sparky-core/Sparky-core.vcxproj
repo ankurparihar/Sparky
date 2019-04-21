@@ -457,6 +457,10 @@
     <ClInclude Include="platform\windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\Lighting\2.Colors.frag" />
+    <None Include="shaders\Lighting\2.Colors.vert" />
+    <None Include="shaders\Lighting\2.Light.frag" />
+    <None Include="shaders\Lighting\2.Light.vert" />
     <None Include="shaders\Getting-started\Going-3D.frag" />
     <None Include="shaders\Getting-started\Going-3D.vert" />
     <None Include="shaders\Getting-started\hello-triangle.frag" />
