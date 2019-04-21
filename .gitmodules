@@ -1,6 +1,0 @@
-[submodule "Sparky-core/vendor/spdlog"]
-	path = Sparky-core/vendor/spdlog
-	url = https://github.com/gabime/spdlog.git
-[submodule "Sparky-core/vendor/imgui"]
-	path = Sparky-core/vendor/imgui
-	url = https://github.com/TheCherno/imgui
