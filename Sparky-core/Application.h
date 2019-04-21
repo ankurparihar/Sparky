@@ -57,7 +57,6 @@ namespace sparky {
 		// case specific variables
 		bool case_8_order;
 		bool case_9_multi;
-		float case_11_r, case_11_g, case_11_b, case_11_a;
 	};
 
 	// To be defined in CLIENT

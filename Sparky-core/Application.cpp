@@ -1101,45 +1101,122 @@ namespace sparky {
 			break;
 			case 13:
 			{
-				// =================================== Colors ==================================== //
+				// =================================== Basic Lighting ==================================== //
 				InterDemoIndex = DemoIndex;
-				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Colors");
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Basic Lighting - Ambient, Diffuse and Specular");
 
-				// case_11_r = case_11_g = case_11_b = case_11_a = 1.0f;
 				color_r = color_g = color_b = color_a = 1.0f;
-				glm::vec3 lightPos = glm::vec3(1.0f, 1.0f, 1.0f);
+				glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 1.0f);
 				glm::vec4 lightColor = glm::vec4(color_r, color_g, color_b, color_a);
 				glm::vec4 objectColor = glm::vec4(1.0f, 0.5f, 0.31f, 1.0f);
 
 				GLfloat vertices[] = {
-					0.5f,  0.5f,  0.5f,
-					0.5f,  0.5f, -0.5f,
-					0.5f, -0.5f,  0.5f,
-					0.5f, -0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					-0.5f,  0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+
+					-0.5f, -0.5f,  0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+					-0.5f, -0.5f,  0.5f,
+
 					-0.5f,  0.5f,  0.5f,
 					-0.5f,  0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+					-0.5f, -0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+
+					-0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f, -0.5f,  0.5f,
 					-0.5f, -0.5f,  0.5f,
 					-0.5f, -0.5f, -0.5f,
+
+					-0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f, -0.5f
+				};
+
+				GLfloat normals[] = {
+					 0.0f,  0.0f, -1.0f,
+					 0.0f,  0.0f, -1.0f,
+					 0.0f,  0.0f, -1.0f,
+					 0.0f,  0.0f, -1.0f,
+					 0.0f,  0.0f, -1.0f,
+					 0.0f,  0.0f, -1.0f,
+					 
+					 0.0f,  0.0f, 1.0f,
+					 0.0f,  0.0f, 1.0f,
+					 0.0f,  0.0f, 1.0f,
+					 0.0f,  0.0f, 1.0f,
+					 0.0f,  0.0f, 1.0f,
+					 0.0f,  0.0f, 1.0f,
+
+					-1.0f,  0.0f,  0.0f,
+					-1.0f,  0.0f,  0.0f,
+					-1.0f,  0.0f,  0.0f,
+					-1.0f,  0.0f,  0.0f,
+					-1.0f,  0.0f,  0.0f,
+					-1.0f,  0.0f,  0.0f,
+
+					 1.0f,  0.0f,  0.0f,
+					 1.0f,  0.0f,  0.0f,
+					 1.0f,  0.0f,  0.0f,
+					 1.0f,  0.0f,  0.0f,
+					 1.0f,  0.0f,  0.0f,
+					 1.0f,  0.0f,  0.0f,
+
+					 0.0f, -1.0f,  0.0f,
+					 0.0f, -1.0f,  0.0f,
+					 0.0f, -1.0f,  0.0f,
+					 0.0f, -1.0f,  0.0f,
+					 0.0f, -1.0f,  0.0f,
+					 0.0f, -1.0f,  0.0f,
+
+					 0.0f,  1.0f,  0.0f,
+					 0.0f,  1.0f,  0.0f,
+					 0.0f,  1.0f,  0.0f,
+					 0.0f,  1.0f,  0.0f,
+					 0.0f,  1.0f,  0.0f,
+					 0.0f,  1.0f,  0.0f
 				};
 
 				GLushort indices[] = {
-					0, 1, 2,
-					1, 2, 3,
-					4, 5, 6,
-					5, 6, 7,
-					0, 1, 5,
-					0, 4, 5,
-					2, 3, 7,
-					2, 6, 7,
-					2, 0, 4,
-					2, 6, 4,
-					1, 3, 7,
-					1, 5, 7
+					 0,  1,  2,
+					 3,  4,  5,
+					 6,  7,  8,
+					 9, 10, 11,
+					12, 13, 14,
+					15, 16, 17,
+					18, 19, 20,
+					21, 22, 23,
+					24, 25, 26,
+					27, 28, 29,
+					30, 31, 32,
+					33, 34, 35
 				};
-
+				
 				VertexArray cubeVAO;
+				cubeVAO.AddBuffers(new Buffer(vertices, 36 * 3, 3), 0);
+				cubeVAO.AddBuffers(new Buffer(normals,  36 * 3, 3), 1);
 				IndexBuffer ibo(indices, 36);
-				cubeVAO.AddBuffers(new Buffer(vertices, 8 * 3, 3), 0);
 
 				Shader shaderColor("shaders/Lighting/2.Colors.vert", "shaders/Lighting/2.Colors.frag");
 				Shader shaderLight("shaders/Lighting/2.Light.vert", "shaders/Lighting/2.Light.frag");
@@ -1158,6 +1235,8 @@ namespace sparky {
 					lightColor = glm::vec4(color_r, color_g, color_b, color_a);
 
 					shaderColor.enable();
+					shaderColor.setUniform3f("viewPos", camera->cameraPos);
+					shaderColor.setUniform3f("lightPos", lightPos);
 					shaderColor.setUniform4f("lightColor", lightColor);
 					shaderColor.setUniform4f("objectColor", objectColor);
 					shaderColor.setUniformMat4("model", model);
@@ -1167,7 +1246,7 @@ namespace sparky {
 
 					model = glm::mat4(1.0f);
 					model = glm::translate(model, lightPos);
-					model = glm::scale(model, glm::vec3(0.2f));
+					model = glm::scale(model, glm::vec3(0.1f));
 
 					shaderLight.enable();
 					shaderLight.setUniform4f("lightColor", lightColor);
