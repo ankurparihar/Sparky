@@ -57,6 +57,8 @@ namespace sparky {
 		// case specific variables
 		bool case_8_order;
 		bool case_9_multi;
+		bool case_13_rotate;
+		float case_13_radius, case_13_theta, case_13_phi, case_13_speed;
 	};
 
 	// To be defined in CLIENT

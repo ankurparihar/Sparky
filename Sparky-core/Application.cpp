@@ -1101,9 +1101,9 @@ namespace sparky {
 			break;
 			case 13:
 			{
-				// =================================== Basic Lighting ==================================== //
+				// =================================== Basic 3D Lighting ==================================== //
 				InterDemoIndex = DemoIndex;
-				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Basic Lighting - Ambient, Diffuse and Specular");
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Basic 3D Lighting - Ambient, Diffuse and Specular");
 
 				color_r = color_g = color_b = color_a = 1.0f;
 				glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 1.0f);
@@ -1227,7 +1227,15 @@ namespace sparky {
 
 				cubeVAO.bind();
 				ibo.bind();
-
+				case_13_rotate = true;// false;
+				case_13_radius = 0.729f; // 2.0f;
+				case_13_phi = 65.0f;// 0.0f;
+				case_13_theta = 0.0f;
+				float theta;
+				case_13_speed = 15.0f;// 10.0f;
+				float lastTime, deltaTime;
+				lastTime = (float)glfwGetTime();
+				float x, y, z;
 				while (m_Running && DemoIndex == InterDemoIndex) {
 					clear();
 
@@ -1244,7 +1252,27 @@ namespace sparky {
 					shaderColor.setUniformMat4("proj", proj);
 					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
 
-					model = glm::mat4(1.0f);
+					// model = glm::mat4(1.0f);
+					
+					if (case_13_rotate) {
+						deltaTime = (float)glfwGetTime() - lastTime;
+						case_13_theta += deltaTime * case_13_speed * 10;
+						case_13_theta = (case_13_theta > 180.0f) ? -180.0f : case_13_theta;
+						lastTime += deltaTime;
+						// flash
+						// deltaTime = (float)glfwGetTime() - lastTime;
+						// case_13_theta += deltaTime * case_13_speed;
+						// case_13_theta = (float)((int)case_13_theta % 360 - 180);
+						// std::cout << case_13_theta << std::endl;
+						// lastTime += deltaTime;
+					}
+
+					theta = (float)(((int)(case_13_theta + 180) % 360) - 180);
+					x = glm::cos(glm::radians(case_13_phi)) * glm::sin(glm::radians(theta));
+					y = glm::sin(glm::radians(case_13_phi));
+					z = glm::cos(glm::radians(case_13_phi)) * glm::cos(glm::radians(theta));
+					lightPos = case_13_radius * glm::vec3(x, y, z);
+					
 					model = glm::translate(model, lightPos);
 					model = glm::scale(model, glm::vec3(0.1f));
 
