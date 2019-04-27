@@ -457,6 +457,8 @@
     <ClInclude Include="platform\windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\Lighting\3.Material.frag" />
+    <None Include="shaders\Lighting\3.material.vert" />
     <None Include="shaders\Lighting\2.Colors.frag" />
     <None Include="shaders\Lighting\2.Colors.vert" />
     <None Include="shaders\Lighting\2.Light.frag" />

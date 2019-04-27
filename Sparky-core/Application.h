@@ -39,6 +39,7 @@ namespace sparky {
 	public:
 		static Application* s_Instance;
 		Camera* camera;
+		bool resetCamera;
 		int DemoIndex;
 		bool WireFrameMode;
 		bool z_bufffer;
@@ -59,6 +60,7 @@ namespace sparky {
 		bool case_9_multi;
 		bool case_13_rotate;
 		float case_13_radius, case_13_theta, case_13_phi, case_13_speed;
+		int case_14_mat;
 	};
 
 	// To be defined in CLIENT

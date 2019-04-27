@@ -31,7 +31,7 @@ namespace sparky {
 		SPARKY_INFO("Maximum no of vertex attributes supported: {0}", nrAttributes);
 		
 		// Default settings
-		DemoIndex = 13;
+		DemoIndex = 14;
 		WireFrameMode = false;
 		z_bufffer = true;
 		glEnable(GL_DEPTH_TEST);
@@ -44,6 +44,7 @@ namespace sparky {
 		mouseLookAround = false;
 		time = -100.0f;
 		mouseClicksL = 0;
+		resetCamera = true;
 	}
 
 	Application::~Application()
@@ -1104,7 +1105,7 @@ namespace sparky {
 				// =================================== Basic 3D Lighting ==================================== //
 				InterDemoIndex = DemoIndex;
 				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Basic 3D Lighting - Ambient, Diffuse and Specular");
-
+				glClearColor(0.13f, 0.13f, 0.13f, 1);
 				color_r = color_g = color_b = color_a = 1.0f;
 				glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 1.0f);
 				glm::vec4 lightColor = glm::vec4(color_r, color_g, color_b, color_a);
@@ -1295,6 +1296,420 @@ namespace sparky {
 				shaderLight.disable();
 			}
 			break;
+			case 14:
+			{
+				// =================================== Material ==================================== //
+				InterDemoIndex = DemoIndex;
+				glfwSetWindowTitle(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()), "Material");
+				glClearColor(0.13f, 0.13f, 0.13f, 1);
+				// color_r = color_g = color_b = color_a = 1.0f;
+				glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 1.0f);
+				glm::vec4 lightColor = glm::vec4(color_r, color_g, color_b, color_a);
+
+				GLfloat vertices[] = {
+					-0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					-0.5f,  0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+
+					-0.5f, -0.5f,  0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+					-0.5f, -0.5f,  0.5f,
+
+					-0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+					-0.5f, -0.5f, -0.5f,
+					-0.5f, -0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+
+					-0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f, -0.5f,
+					 0.5f, -0.5f,  0.5f,
+					 0.5f, -0.5f,  0.5f,
+					-0.5f, -0.5f,  0.5f,
+					-0.5f, -0.5f, -0.5f,
+
+					-0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f, -0.5f,
+					 0.5f,  0.5f,  0.5f,
+					 0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f,  0.5f,
+					-0.5f,  0.5f, -0.5f
+				};
+
+				GLfloat normals[] = {
+					 0.0f,  0.0f, -1.0f,
+					 0.0f,  0.0f, -1.0f,
+					 0.0f,  0.0f, -1.0f,
+					 0.0f,  0.0f, -1.0f,
+					 0.0f,  0.0f, -1.0f,
+					 0.0f,  0.0f, -1.0f,
+
+					 0.0f,  0.0f, 1.0f,
+					 0.0f,  0.0f, 1.0f,
+					 0.0f,  0.0f, 1.0f,
+					 0.0f,  0.0f, 1.0f,
+					 0.0f,  0.0f, 1.0f,
+					 0.0f,  0.0f, 1.0f,
+
+					-1.0f,  0.0f,  0.0f,
+					-1.0f,  0.0f,  0.0f,
+					-1.0f,  0.0f,  0.0f,
+					-1.0f,  0.0f,  0.0f,
+					-1.0f,  0.0f,  0.0f,
+					-1.0f,  0.0f,  0.0f,
+
+					 1.0f,  0.0f,  0.0f,
+					 1.0f,  0.0f,  0.0f,
+					 1.0f,  0.0f,  0.0f,
+					 1.0f,  0.0f,  0.0f,
+					 1.0f,  0.0f,  0.0f,
+					 1.0f,  0.0f,  0.0f,
+
+					 0.0f, -1.0f,  0.0f,
+					 0.0f, -1.0f,  0.0f,
+					 0.0f, -1.0f,  0.0f,
+					 0.0f, -1.0f,  0.0f,
+					 0.0f, -1.0f,  0.0f,
+					 0.0f, -1.0f,  0.0f,
+
+					 0.0f,  1.0f,  0.0f,
+					 0.0f,  1.0f,  0.0f,
+					 0.0f,  1.0f,  0.0f,
+					 0.0f,  1.0f,  0.0f,
+					 0.0f,  1.0f,  0.0f,
+					 0.0f,  1.0f,  0.0f
+				};
+
+				GLushort indices[] = {
+					 0,  1,  2,
+					 3,  4,  5,
+					 6,  7,  8,
+					 9, 10, 11,
+					12, 13, 14,
+					15, 16, 17,
+					18, 19, 20,
+					21, 22, 23,
+					24, 25, 26,
+					27, 28, 29,
+					30, 31, 32,
+					33, 34, 35
+				};
+
+				VertexArray cubeVAO;
+				cubeVAO.AddBuffers(new Buffer(vertices, 36 * 3, 3), 0);
+				cubeVAO.AddBuffers(new Buffer(normals, 36 * 3, 3), 1);
+				IndexBuffer ibo(indices, 36);
+
+				Shader shaderMaterial("shaders/Lighting/3.Material.vert", "shaders/Lighting/3.Material.frag");
+				Shader shaderLight("shaders/Lighting/2.Light.vert", "shaders/Lighting/2.Light.frag");
+
+				glm::mat4 proj = glm::mat4(1.0f);
+				proj = glm::perspective(glm::radians(45.0f), (float)scr_width / (float)scr_height, 0.1f, 100.0f);
+				glm::mat4 model;
+
+				cubeVAO.bind();
+				ibo.bind();
+				case_13_rotate = true;// false;
+				case_13_radius = 0.729f; // 2.0f;
+				case_13_phi = 65.0f;// 0.0f;
+				case_13_theta = 0.0f;
+				float theta;
+				case_13_speed = 15.0f;// 10.0f;
+				float lastTime, deltaTime;
+				lastTime = (float)glfwGetTime();
+				float x, y, z;
+				case_14_mat = 0;
+				while (m_Running && DemoIndex == InterDemoIndex) {
+					clear();
+
+					model = glm::mat4(1.0f);
+					lightColor = glm::vec4(color_r, color_g, color_b, color_a);
+
+					shaderMaterial.enable();
+					shaderMaterial.setUniform3f("viewPos", camera->cameraPos);
+					shaderMaterial.setUniform3f("light.position", lightPos);
+					shaderMaterial.setUniform3f("light.diffuse", glm::vec3(lightColor) * glm::vec3(0.5f));
+					shaderMaterial.setUniform3f("light.ambient", glm::vec3(lightColor) * glm::vec3(0.1f));
+					shaderMaterial.setUniform3f("light.specular", glm::vec3(1.0f));
+					// material properties
+					switch (case_14_mat)
+					{
+					case 0:
+					{
+						// emerald
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.0215, 0.1745, 0.0215));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.07568, 0.61424, 0.07568));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.633, 0.727811, 0.633));
+						shaderMaterial.setUniform1f("material.shininess", (float)76.8);
+					}
+					break;
+					case 1:
+					{
+						// jade
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.135, 0.2225, 0.1575));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.54, 0.89, 0.63));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.316228, 0.316228, 0.316228));
+						shaderMaterial.setUniform1f("material.shininess", (float)12.8);
+					}
+					break;
+					case 2:
+					{
+						// obsidian
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.05375, 0.05, 0.06625));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.18275, 0.17, 0.22525));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.332741, 0.328634, 0.346435));
+						shaderMaterial.setUniform1f("material.shininess", (float)38.4);
+					}
+					break;
+					case 3:
+					{
+						// pearl
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.25, 0.20725, 0.20725));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(1, 0.829, 0.829));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.296648, 0.296648, 0.296648));
+						shaderMaterial.setUniform1f("material.shininess", (float)11.264);
+					}
+					break;
+					case 4:
+					{
+						// ruby
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.1745, 0.01175, 0.01175));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.61424, 0.04136, 0.04136));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.727811, 0.626959, 0.626959));
+						shaderMaterial.setUniform1f("material.shininess", (float)76.8);
+					}
+					break;
+					case 5:
+					{
+						// turquoise
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.1, 0.18725, 0.1745));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.396, 0.74151, 0.69102));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.297254, 0.30829, 0.306678));
+						shaderMaterial.setUniform1f("material.shininess", (float)12.8);
+					}
+					break;
+					case 6:
+					{
+						// brass
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.329412, 0.223529, 0.027451));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.780392, 0.568627, 0.113725));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.992157, 0.941176, 0.807843));
+						shaderMaterial.setUniform1f("material.shininess", (float)27.897);
+					}
+					break;
+					case 7:
+					{
+						// bronze
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.2125, 0.1275, 0.054));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.714, 0.4284, 0.18144));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.393548, 0.271906, 0.166721));
+						shaderMaterial.setUniform1f("material.shininess", (float)25.6);
+					}
+					break;
+					case 8:
+					{
+						// chrome
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.25, 0.25, 0.25));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.4, 0.4, 0.4));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.774597, 0.774597, 0.774597));
+						shaderMaterial.setUniform1f("material.shininess", (float)76.8);
+					}
+					break;
+					case 9:
+					{
+						// copper
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.19125, 0.0735, 0.0225));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.7038, 0.27048, 0.0828));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.256777, 0.137622, 0.086014));
+						shaderMaterial.setUniform1f("material.shininess", (float)12.8);
+					}
+					break;
+					case 10:
+					{
+						// gold
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.24725, 0.1995, 0.0745));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.75164, 0.60648, 0.22648));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.628281, 0.555802, 0.366065));
+						shaderMaterial.setUniform1f("material.shininess", (float)51.2);
+					}
+					break;
+					case 11:
+					{
+						// silver
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.19225, 0.19225, 0.19225));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.50754, 0.50754, 0.50754));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.508273, 0.508273, 0.508273));
+						shaderMaterial.setUniform1f("material.shininess", (float)51.2);
+					}
+					break;
+					case 12:
+					{
+						// black plastic
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.0, 0.0, 0.0));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.01, 0.01, 0.01));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.50, 0.50, 0.50));
+						shaderMaterial.setUniform1f("material.shininess", (float)32);
+					}
+					break;
+					case 13:
+					{
+						// cyan plastic
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.0, 0.1, 0.06));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.0, 0.50980392, 0.50980392));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.501961, 0.501961, 0.501961));
+						shaderMaterial.setUniform1f("material.shininess", (float)32);
+					}
+					break;
+					case 14:
+					{
+						// green plastic
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.0, 0.0, 0.0));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.1, 0.35, 0.1));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.45, 0.55, 0.45));
+						shaderMaterial.setUniform1f("material.shininess", (float)32);
+					}
+					break;
+					case 15:
+					{
+						// red plastic
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.0, 0.0, 0.0));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.5, 0.0, 0.0));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.7, 0.6, 0.6));
+						shaderMaterial.setUniform1f("material.shininess", (float)32);
+					}
+					break;
+					case 16:
+					{
+						// white plastic
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.0, 0.0, 0.0));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.55, 0.55, 0.55));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.70, 0.70, 0.70));
+						shaderMaterial.setUniform1f("material.shininess", (float)32);
+					}
+					break;
+					case 17:
+					{
+						// yellow plastic
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.0, 0.0, 0.0));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.5, 0.5, 0.0));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.60, 0.60, 0.50));
+						shaderMaterial.setUniform1f("material.shininess", (float)32);
+					}
+					break;
+					case 18:
+					{
+						// black rubber
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.02, 0.02, 0.02));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.01, 0.01, 0.01));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.4, 0.4, 0.4));
+						shaderMaterial.setUniform1f("material.shininess", (float)10);
+					}
+					break;
+					case 19:
+					{
+						// cyan rubber
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.0, 0.05, 0.05));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.4, 0.5, 0.5));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.04, 0.7, 0.7));
+						shaderMaterial.setUniform1f("material.shininess", (float)10);
+					}
+					break;
+					case 20:
+					{
+						// green rubber
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.0, 0.05, 0.0));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.4, 0.5, 0.4));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.04, 0.7, 0.04));
+						shaderMaterial.setUniform1f("material.shininess", (float)10);
+					}
+					break;
+					case 21:
+					{
+						// red rubber
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.05, 0.0, 0.0));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.5, 0.4, 0.4));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.7, 0.04, 0.04));
+						shaderMaterial.setUniform1f("material.shininess", (float)10);
+					}
+					break;
+					case 22:
+					{
+						// white rubber
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.05, 0.05, 0.05));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.5, 0.5, 0.5));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.7, 0.7, 0.7));
+						shaderMaterial.setUniform1f("material.shininess", (float)10);
+					}
+					break;
+					case 23:
+					{
+						// yellow rubber
+						shaderMaterial.setUniform3f("material.ambient", glm::vec3(0.05, 0.05, 0.0));
+						shaderMaterial.setUniform3f("material.diffuse", glm::vec3(0.5, 0.5, 0.4));
+						shaderMaterial.setUniform3f("material.specular", glm::vec3(0.7, 0.7, 0.04));
+						shaderMaterial.setUniform1f("material.shininess", (float)10);
+					}
+					break;
+					default:
+						break;
+					}
+
+					shaderMaterial.setUniformMat4("model", model);
+					shaderMaterial.setUniformMat4("view", camera->view);
+					shaderMaterial.setUniformMat4("proj", proj);
+					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+
+					// model = glm::mat4(1.0f);
+
+					if (case_13_rotate) {
+						deltaTime = (float)glfwGetTime() - lastTime;
+						case_13_theta += deltaTime * case_13_speed * 10;
+						case_13_theta = (case_13_theta > 180.0f) ? -180.0f : case_13_theta;
+						lastTime += deltaTime;
+					}
+
+					theta = (float)(((int)(case_13_theta + 180) % 360) - 180);
+					x = glm::cos(glm::radians(case_13_phi)) * glm::sin(glm::radians(theta));
+					y = glm::sin(glm::radians(case_13_phi));
+					z = glm::cos(glm::radians(case_13_phi)) * glm::cos(glm::radians(theta));
+					lightPos = case_13_radius * glm::vec3(x, y, z);
+
+					model = glm::translate(model, lightPos);
+					model = glm::scale(model, glm::vec3(0.1f));
+
+					shaderLight.enable();
+					shaderLight.setUniform4f("lightColor", lightColor);
+					shaderLight.setUniformMat4("model", model);
+					shaderLight.setUniformMat4("view", camera->view);
+					shaderLight.setUniformMat4("proj", proj);
+					glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+					// shaderLight.disable();
+
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+
+					m_Window->OnUpdate();
+				}
+
+				ibo.unbind();
+				cubeVAO.unbind();
+				shaderLight.disable();
+			}
+			break;
 			default:
 				m_Running = false;
 				break;
@@ -1310,12 +1725,16 @@ namespace sparky {
 
 	void Application::next_demo() {
 		glClearColor(0, 0, 0, 1);
-		camera->resetCamera();
+		if (resetCamera) {
+			camera->resetCamera();
+		}
 		DemoIndex++;
 	}
 	void Application::prev_demo() {
 		glClearColor(0, 0, 0, 1);
-		camera->resetCamera();
+		if (resetCamera) {
+			camera->resetCamera();
+		}
 		DemoIndex--;
 	}
 	void Application::flip_wireframe_mode() {
@@ -1333,8 +1752,9 @@ namespace sparky {
 	void Application::swap_demo(int i)
 	{
 		glClearColor(0, 0, 0, 1);
-		camera->resetCamera();
+		if (resetCamera) {
+			camera->resetCamera();
+		}
 		DemoIndex = i;
 	}
-
 }
