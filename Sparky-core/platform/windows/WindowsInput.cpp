@@ -1,5 +1,4 @@
 #include "WindowsInput.h"
-
 #include "Application.h"
 
 namespace sparky {

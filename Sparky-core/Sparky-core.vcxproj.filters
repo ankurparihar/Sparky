@@ -37,9 +37,6 @@
     <Filter Include="src\Events">
       <UniqueIdentifier>{b937a989-7cc3-4adf-8804-0c95d1cbc8d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Log">
-      <UniqueIdentifier>{93c3c27d-7457-4185-b994-786fa1b52332}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\platform">
       <UniqueIdentifier>{19b8f8ab-8f43-4825-b9d2-9df15e4b5dc0}</UniqueIdentifier>
     </Filter>
@@ -48,9 +45,6 @@
     </Filter>
     <Filter Include="src\Layer">
       <UniqueIdentifier>{d92de8a2-8855-461d-afb5-b75534176fe2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\imgui">
-      <UniqueIdentifier>{68344531-03a5-4807-8f5a-d2ef0082c3e4}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\platform\OpenGL">
       <UniqueIdentifier>{fc983ea0-53ef-4a7f-a41c-96dbda94fd64}</UniqueIdentifier>
@@ -75,6 +69,12 @@
     </Filter>
     <Filter Include="src\shaders\Lighting">
       <UniqueIdentifier>{4ddae01b-a8e0-4c57-a3be-5b510795a007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics\imgui">
+      <UniqueIdentifier>{68344531-03a5-4807-8f5a-d2ef0082c3e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utils\Log">
+      <UniqueIdentifier>{93c3c27d-7457-4185-b994-786fa1b52332}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,7 +103,7 @@
       <Filter>src\graphics\buffers</Filter>
     </ClCompile>
     <ClCompile Include="Log.cpp">
-      <Filter>src\Log</Filter>
+      <Filter>src\utils\Log</Filter>
     </ClCompile>
     <ClCompile Include="Dummy.cpp">
       <Filter>src</Filter>
@@ -130,19 +130,19 @@
       <Filter>src\maths</Filter>
     </ClCompile>
     <ClCompile Include="vendor\imgui\imgui.cpp">
-      <Filter>src\imgui</Filter>
+      <Filter>src\graphics\imgui</Filter>
     </ClCompile>
     <ClCompile Include="vendor\imgui\imgui_demo.cpp">
-      <Filter>src\imgui</Filter>
+      <Filter>src\graphics\imgui</Filter>
     </ClCompile>
     <ClCompile Include="vendor\imgui\imgui_draw.cpp">
-      <Filter>src\imgui</Filter>
+      <Filter>src\graphics\imgui</Filter>
     </ClCompile>
     <ClCompile Include="vendor\imgui\imgui_widgets.cpp">
-      <Filter>src\imgui</Filter>
+      <Filter>src\graphics\imgui</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiLayer.cpp">
-      <Filter>src\imgui</Filter>
+      <Filter>src\graphics\imgui</Filter>
     </ClCompile>
     <ClCompile Include="platform\OpenGL\imgui_impl_opengl3.cpp">
       <Filter>src\platform\OpenGL</Filter>
@@ -948,7 +948,7 @@
       <Filter>src\Events</Filter>
     </ClInclude>
     <ClInclude Include="Log.h">
-      <Filter>src\Log</Filter>
+      <Filter>src\utils\Log</Filter>
     </ClInclude>
     <ClInclude Include="Core.h">
       <Filter>src</Filter>
@@ -984,7 +984,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiLayer.h">
-      <Filter>src\imgui</Filter>
+      <Filter>src\graphics\imgui</Filter>
     </ClInclude>
     <ClInclude Include="platform\OpenGL\imgui_impl_opengl3.h">
       <Filter>Header Files</Filter>

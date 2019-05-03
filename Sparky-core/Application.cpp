@@ -1,15 +1,9 @@
 #include "Application.h"
-#include "Input.h"
-
-#include "Shader.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Texture.h"
-
 #include "ExampleLayer.h"
 #include "ImGuiLayer.h"
-
-// #include "Events/ApplicationEvent.h"
 
 namespace sparky {
 
@@ -31,7 +25,7 @@ namespace sparky {
 		SPARKY_INFO("Maximum no of vertex attributes supported: {0}", nrAttributes);
 		
 		// Default settings
-		DemoIndex = 14;
+		DemoIndex = 1;
 		WireFrameMode = false;
 		z_bufffer = true;
 		glEnable(GL_DEPTH_TEST);

@@ -1,5 +1,4 @@
 #pragma once
-#include "sppch.h"
 #include "Shader.h"
 
 namespace sparky {

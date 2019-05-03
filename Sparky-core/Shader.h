@@ -1,8 +1,8 @@
 #pragma once
 
 #include <iostream>
-// #include <GL/glew.h>
 #include <glad/glad.h>
+#include "sppch.h"
 #include "fileutils.h"
 #include "maths.h"
 #include "glm/glm.hpp"

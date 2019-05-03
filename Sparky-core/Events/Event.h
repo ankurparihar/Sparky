@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Core.h"
 #include <string>
 #include <functional>
-
+#include <sstream>
 #include "Input.h"
 
 namespace sparky {
